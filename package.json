@@ -1,6 +1,9 @@
 {
   "name": "seven-soft",
   "version": "0.2.0",
+  "engines":{
+  "node":"8.11.1"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
