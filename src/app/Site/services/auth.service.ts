@@ -12,7 +12,7 @@ import 'rxjs/add/operator/map'
 })
 export class AuthService {
   public token: string;
-  private API_URI = 'http://localhost:3000/api';
+  private API_URI = 'https://servidorsevensoft.azurewebsites.net/api';
 
 
   constructor(private http: HttpClient) {

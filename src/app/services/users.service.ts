@@ -9,7 +9,7 @@ import { Observable, of } from 'rxjs';
 })
 export class UsersService {
 
-  API_URI = 'http://localhost:3000/api';
+  API_URI = 'https://servidorsevensoft.azurewebsites.net/api';
 
   constructor(private http: HttpClient) { }
 

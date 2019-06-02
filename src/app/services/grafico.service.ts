@@ -8,7 +8,7 @@ import 'rxjs/add/operator/map';
 })
 export class GraficoService {
 
-  API_URI = 'http://localhost:3000/api';
+  API_URI = 'https://servidorsevensoft.azurewebsites.net/api';
 
   constructor(private http: HttpClient, private httpHandler: HttpHandler) { }
 
