@@ -5,11 +5,10 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators/map';
 import 'rxjs/add/operator/map'
 
-
-
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthService {
   public token: string;
   private API_URI = 'https://servidorsevensoft.azurewebsites.net/api';

@@ -13,7 +13,7 @@ import { UserSeven } from '../models/UserSeven';
 })
 export class UsersService {
 
-  API_URI = 'https://servidorsevensoft.azurewebsites.net/';
+  API_URI = 'https://servidorsevensoft.azurewebsites.net/api';
 
   //private isloggedIn: boolean;
 
@@ -86,7 +86,7 @@ export class UsersService {
   // }
 
   login(formData: NgForm) {
-    return this.http.post<any>(`${this.API_URI}/api/login`, formData).pipe(
+    return this.http.post<any>(`${this.API_URI}/login`, formData).pipe(
       tap(user => {
         if (user) {
           localStorage.setItem('currentUser', JSON.stringify(user));
