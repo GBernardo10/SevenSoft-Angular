@@ -13,15 +13,12 @@ export class GraficoService {
   constructor(private http: HttpClient, private httpHandler: HttpHandler) { }
 
 
-  getAllDados() {
-    return this.http.get(`${this.API_URI}/grafico`).map(result => result);
-  }
-
-  getIdDado(id: string) {
+  getAllDados(id: string | number) {
     return this.http.get(`${this.API_URI}/grafico/${id}`).map(result => result);
   }
 
-  dailyForecast() {
-    return this.http.get("https://cors-anywhere.herokuapp.com/http://samples.openweathermap.org/data/2.5/history/city?q=Warren,OH&appid=b6907d289e10d714a6e88b30761fae22").map(result => result);
-  }
+  // getIdDado(id: string) {
+  //   return this.http.get(`${this.API_URI}/grafico/${id}`).map(result => result);
+  // }
+
 }

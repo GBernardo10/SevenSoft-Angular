@@ -4,7 +4,10 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+
+
 import { AppRoutingModule } from './app-routing.module';
+
 import { AppComponent } from './app.component';
 import { HomeComponent } from './Site/home/home.component';
 import { CadastroComponent } from './Site/cadastro/cadastro.component';
@@ -20,6 +23,10 @@ import { ProjetoComponent } from './Site/projeto/projeto.component';
 import { UserDashboardModule } from './dashboard/user-dashboard/user-dashboard.module';
 import { GraficoService } from './Site/services/grafico.service';
 import { UsersService } from './Site/services/users.service';
+import { EventoService } from './Site/services/eventos.service';
+import {NgxMaskModule} from 'ngx-mask';
+
+
 
 @NgModule({
   declarations: [
@@ -34,17 +41,6 @@ import { UsersService } from './Site/services/users.service';
     ServicosComponent,
     SideBarComponent,
     ProjetoComponent
-    // ConteudoComponent,
-    // NavigationComponent,
-    // UserFormComponent,
-    // UserListComponent,
-    // ParallaxDirective,
-    // ParallaxComponent,
-    // UserEditComponent,
-    // AdmComponent,
-    // SiteNavBarComponent,
-    // FooterSiteComponent
-    // DashboardComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,14 +51,22 @@ import { UsersService } from './Site/services/users.service';
     AppRoutingModule,
     HttpClientModule,
     UserDashboardModule,
-    Error404Module
+    Error404Module,
+    NgxMaskModule.forRoot(new Option)
+
+    // ComponentsDashboardModule,
+    // ComponentsGraficoModule
   ],
   providers: [
     UsersService,
     GraficoService,
+    EventoService
+    // AuthGuard
   ],
   bootstrap: [AppComponent]
 })
 
+
 export class AppModule {
+  
 }

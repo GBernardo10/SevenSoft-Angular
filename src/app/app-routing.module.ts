@@ -13,39 +13,22 @@ import { Routes, RouterModule } from '@angular/router';
 // import { FooterSiteComponent } from './components/footer-site/footer.component';
 // import { UserProfileComponent } from './components/user-profile/user-profile.component';
 
-import { HomeComponent } from './Site/home/home.component';
-import { ObjetivoComponent } from './Site/objetivo/objetivo.component';
-import { ServicosComponent } from './Site/servicos/servicos.component';
-import { ProjetoComponent } from './Site/projeto/projeto.component';
-import { ContatoComponent } from './Site/contato/contato.component';
-import { CadastroComponent } from './Site/cadastro/cadastro.component';
 import { LoginComponent } from './Site/login/login.component';
 import { GuardService } from './Site/services/guard.service';
 import { UserDashboardModule } from './dashboard/user-dashboard/user-dashboard.module';
-import { EventoDashboardComponent } from './dashboard/user-dashboard/evento-dashboard/evento-dashboard.component';
-import { ChamadosDashboardComponent } from './dashboard/user-dashboard/chamados-dashboard/chamados-dashboard.component';
 import { Error404Module } from './Site/error404/error404.module';
-import { PerfilDashboardComponent } from './dashboard/user-dashboard/perfil-dashboard/perfil-dashboard.component';
-
-
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/home',
+    redirectTo: '/login',
     pathMatch: 'full'
   },
-  { path: 'home', component: HomeComponent },
-  { path: 'objetivo', component: ObjetivoComponent },
-  { path: 'projeto', component: ProjetoComponent },
-  { path: 'servicos', component: ServicosComponent },
-  { path: 'contato', component: ContatoComponent, canActivate: [GuardService] },
   { path: 'login', component: LoginComponent },
-  { path: 'cadastro', component: CadastroComponent },
   { path: 'dashboard/:id', loadChildren: () => UserDashboardModule, canActivate: [GuardService] },
-  { path: 'perfil', component: PerfilDashboardComponent },
-  { path: 'evento', component: EventoDashboardComponent },
-  { path: 'abrir-chamado', component: ChamadosDashboardComponent },
+  // { path: 'perfil', component: PerfilDashboardComponent },
+  // { path: 'evento', component: EventoDashboardComponent },
+  // { path: 'abrir-chamado', component: ChamadosDashboardComponent },
   { path: '404', loadChildren: () => Error404Module },
   // { path: '**', redirectTo: '/404' },
 ]
