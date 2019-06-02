@@ -13,7 +13,7 @@ import { UserSeven } from '../models/UserSeven';
 })
 export class UsersService {
 
-  API_URI = 'https://servidorsevensoft.azurewebsites.net/api';
+  API_URI = 'https://servidorsevensoft.azurewebsites.net/';
 
   //private isloggedIn: boolean;
 
