@@ -1012,11 +1012,20 @@ var EventoService = /** @class */ (function () {
         console.log(formData);
         return this.http.post(this.API_URI + "/evento", formData);
     };
-    // getAllEventoById(id: Evento) {
-    //   return this.http.get<any>(`${this.API_URI}/evento/${id}`);
-    // }
-    EventoService.prototype.getEventoById = function (id) {
-        return this.http.get(this.API_URI + "/evento/" + id).map(function (result) { return result; });
+    EventoService.prototype.cadChamado = function (formData) {
+        return this.http.post(this.API_URI + "/chamado", formData);
+    };
+    EventoService.prototype.getProcesso = function (id) {
+        return this.http.get(this.API_URI + "/processo/" + id);
+    };
+    EventoService.prototype.getTotalRowsChamado = function (id) {
+        return this.http.get(this.API_URI + "/chamado/" + id + "/total/" + id);
+    };
+    EventoService.prototype.getAllEventoById = function (id) {
+        return this.http.get(this.API_URI + "/evento/" + id);
+    };
+    EventoService.prototype.getAllEventoAndMaquinaById = function (id) {
+        return this.http.get(this.API_URI + "/evento/" + id + "/eventosByMaquinaId/" + id).map(function (result) { return result; });
     };
     EventoService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
@@ -1213,7 +1222,7 @@ var UsersService = /** @class */ (function () {
     UsersService.prototype.logout = function () {
         if (localStorage.getItem('currentUser')) {
             localStorage.removeItem('currentUser');
-            this.router.navigate(['/home']);
+            this.router.navigate(['/login']);
         }
     };
     UsersService.prototype.isloggedIn = function () {
@@ -1406,16 +1415,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-// import { AdmComponent } from './dashboard/adm/adm.component'
-// import { UserListComponent } from './components/user-list/user-list.component';
-// import { UserEditComponent } from './components/user-edit/user-edit.component';
-// import { GraficoComponent } from './components/grafico/grafico.component';
-// import { LoginComponent } from './components/login/login.component';
-// import { DashboardComponent } from './components/dashboard/dashboard.component';
-// import { AuthGuard } from './authentication/auth.guard';
-// import { ConteudoComponent } from './components/conteudo/conteudo.component';
-// import { FooterSiteComponent } from './components/footer-site/footer.component';
-// import { UserProfileComponent } from './components/user-profile/user-profile.component';
 
 
 
@@ -1428,119 +1427,8 @@ var routes = [
     },
     { path: 'login', component: _Site_login_login_component__WEBPACK_IMPORTED_MODULE_5__["LoginComponent"] },
     { path: 'dashboard/:id', loadChildren: function () { return _dashboard_user_dashboard_user_dashboard_module__WEBPACK_IMPORTED_MODULE_7__["UserDashboardModule"]; }, canActivate: [_Site_services_guard_service__WEBPACK_IMPORTED_MODULE_6__["GuardService"]] },
-    // { path: 'perfil', component: PerfilDashboardComponent },
-    // { path: 'evento', component: EventoDashboardComponent },
-    // { path: 'abrir-chamado', component: ChamadosDashboardComponent },
     { path: '404', loadChildren: function () { return _Site_error404_error404_module__WEBPACK_IMPORTED_MODULE_8__["Error404Module"]; } },
 ];
-// {
-//   path: '',
-//   component:ConteudoComponent,
-//   pathMatch: 'full'
-// },
-// {
-//   path:'',
-//   redirectTo:'dashboard',
-//   pathMatch:'full'
-// },
-// {
-//   path: '',
-//   component: AdmComponent,
-//   children: [
-//     {
-//       path: '',
-//       loadChildren: './dashboard/adm/adm.module#AdmModule',
-//     }
-//   ]
-// },
-// {
-//   path: 'dashboard',
-//   component: AdmComponent,
-//   children: [
-//     {
-//       path: 'dashboard',
-//       loadChildren: './dashboard/adm/adm.module#AdmModule',
-//     }
-//   ]
-// },
-// {
-//   path: 'user-profile', 
-//   component: UserProfileComponent,
-// },
-// {
-//   path: 'chart',
-//   component: GraficoComponent
-// },
-// {
-//   path:'user-profile',
-//   component:UserProfileComponent
-// },
-//   {
-//     path: 'teste',
-//     component: FooterSiteComponent
-//   },
-// ];
-// {
-//   path: 'homem', 
-//   component: ConteudoComponent,
-//   children: [
-//     {
-//       path: '',
-//       pathMatch: 'full',
-//       redirectTo: 'home'
-//     };
-//   ],
-//     {
-//       path: 'dashboard',
-//       component: AdmComponent,
-//       children: [
-//         {
-//           path: 'dashboard',
-//           loadChildren: './dashboard/adm/adm.module#AdmModule'
-//         }
-//       ]
-//     }
-// {
-//   path: '',
-//   redirectTo: 'dashboard',
-//   pathMatch: 'full'
-// },
-// {
-//   path: '',
-//   component: AdmComponent,
-//   children: [
-//     {
-//       path: '',
-//       loadChildren: './dashboard/adm/adm.module#AdmModule'
-//     }
-//   ]
-// }
-// {
-//   path: '',
-//   redirectTo: '/',
-//   pathMatch: 'full'
-// },
-// {
-//   path: 'user',
-//   component: UserListComponent
-// },
-// {
-//   path: 'user/add',
-//   component: UserFormComponent
-// },
-// {
-//   path: 'user/edit/:id',
-//   component: UserEditComponent
-// },
-// {
-//   path: 'login',
-//   component: LoginComponent
-// },
-// {
-//   path: 'dashboard',
-//   component: DashboardComponent,
-//   //canActivate:[AuthGuard]
-// }
 var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {
     }
@@ -1579,7 +1467,7 @@ module.exports = ".carousel{\r\n    z-index: -1;\r\n    position: relative;\r\n 
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- <app-side-bar></app-side-bar> -->\r\n<router-outlet></router-outlet>\r\n<!--\r\n<app-conteudo></app-conteudo>\r\n <div id=\"main\" class=\"conteiner\">\r\n  <div id=\"carouselExampleIndicators\" class=\"carousel slide\" data-ride=\"carousel\">\r\n    <ol class=\"carousel-indicators\">\r\n      <li data-target=\"#carouselExampleIndicators\" data-slide-to=\"0\" class=\"active\"></li>\r\n      <li data-target=\"#carouselExampleIndicators\" data-slide-to=\"1\"></li>\r\n      <li data-target=\"#carouselExampleIndicators\" data-slide-to=\"2\"></li>\r\n    </ol>\r\n    <div class=\"carousel-inner\">\r\n      <div class=\"carousel-item active\">\r\n        <img class=\"d-block w-100\" id=\"primeiroSlide\">\r\n      </div>\r\n      <div class=\"carousel-item\">\r\n        <img class=\"d-block w-100\" id=\"segundoSlide\">\r\n      </div>\r\n      <div class=\"carousel-item\">\r\n        <img class=\"d-block w-100\" id=\"terceiroSlide\">\r\n      </div>\r\n    </div>\r\n    <a class=\"carPrev carousel-control-prev\" id=\"botaoPrev\" href=\"#carouselExampleIndicators\" role=\"button\"\r\n      data-slide=\"prev\">\r\n      <span class=\"carPrevControl carousel-control-prev-icon\" aria-hidden=\"true\"></span>\r\n      <span class=\"sr-only\">Previous</span>\r\n    </a>\r\n    <a class=\"carNext carousel-control-next\" href=\"#carouselExampleIndicators\" role=\"button\" data-slide=\"next\">\r\n      <span class=\"carNextControl carousel-control-next-icon\" aria-hidden=\"true\"></span>\r\n      <span class=\"sr-only\">Next</span>\r\n    </a>\r\n  </div>\r\n</div> \r\n<div id=\"body\">\r\n  <header class=\"headder\">\r\n    <nav class=\"navigation\">\r\n      <section class=\"navigation_icon\">\r\n        <span class=\"topBar\"></span>\r\n        <span class=\"middleBar\"></span>\r\n        <span class=\"bottomBar\"></span>\r\n      </section>\r\n      <ul class=\"navigation_ul\">\r\n        <li><a routerLink=\"/\">Inicio</a></li>\r\n        <li><a routerLink=\"/teste\">Objetivo</a></li>\r\n        <li><a href=\"#servicos\">Serviços</a></li>\r\n        <li><a href=\"projeto\">Projeto</a></li>\r\n        <li><a href=\"contato\">Contato</a></li>\r\n        <li><a href=\"login\">Login</a></li>\r\n        <li><a href=\"cadastro\">Cadastro</a></li>\r\n      </ul>\r\n    </nav>\r\n  </header>\r\n  -->\r\n<!-- <app-navigation></app-navigation>\r\n<site-nav-bar></site-nav-bar> -->\r\n\r\n\r\n\r\n  <!--\r\n<router-outlet></router-outlet>\r\n\r\n<app-navigation class=\"carousel\"></app-navigation>\r\n\r\n<app-nav-bar></app-nav-bar>\r\n\r\n <app-parallax></app-parallax> \r\n\r\n<app-conteudo></app-conteudo>\r\n\r\n\r\n\r\n<div class=\"container p-4\">\r\n  <router-outlet></router-outlet>\r\n</div>\r\n\r\nThe content below is only a placeholder and can be replaced.\r\n<div style=\"text-align:center\">\r\n  <h1>\r\n    Welcome to {{ title }}!\r\n  </h1>\r\n  <img width=\"300\" alt=\"Angular Logo\" src=\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==\">\r\n</div>\r\n<h2>Here are some links to help you start: </h2>\r\n<ul>\r\n  <li>\r\n    <h2><a target=\"_blank\" rel=\"noopener\" href=\"https://angular.io/tutorial\">Tour of Heroes</a></h2>\r\n  </li>\r\n  <li>\r\n    <h2><a target=\"_blank\" rel=\"noopener\" href=\"https://angular.io/cli\">CLI Documentation</a></h2>\r\n  </li>\r\n  <li>\r\n    <h2><a target=\"_blank\" rel=\"noopener\" href=\"https://blog.angular.io/\">Angular blog</a></h2>\r\n  </li>\r\n</ul>-->"
+module.exports = "<router-outlet></router-outlet>"
 
 /***/ }),
 
@@ -1704,14 +1592,11 @@ var AppModule = /** @class */ (function () {
                 _dashboard_user_dashboard_user_dashboard_module__WEBPACK_IMPORTED_MODULE_20__["UserDashboardModule"],
                 _Site_error404_error404_module__WEBPACK_IMPORTED_MODULE_13__["Error404Module"],
                 ngx_mask__WEBPACK_IMPORTED_MODULE_24__["NgxMaskModule"].forRoot(new Option)
-                // ComponentsDashboardModule,
-                // ComponentsGraficoModule
             ],
             providers: [
                 _Site_services_users_service__WEBPACK_IMPORTED_MODULE_22__["UsersService"],
                 _Site_services_grafico_service__WEBPACK_IMPORTED_MODULE_21__["GraficoService"],
                 _Site_services_eventos_service__WEBPACK_IMPORTED_MODULE_23__["EventoService"]
-                // AuthGuard
             ],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_8__["AppComponent"]]
         })
@@ -1741,7 +1626,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"wrapper\">\r\n  <div class=\"sidebar\" data-color=\"danger\" data-background-color=\"white\" data-image=\"./assets/img/sidebar-1.jpg\">\r\n    <app-side-bar-dashboard></app-side-bar-dashboard>\r\n    <div class=\"sidebar-background\" style=\"background-image: url(./assets/img/sidebar-4.jpg)\"></div>\r\n  </div>\r\n  <div class=\"main-panel\">\r\n    <app-nav-bar-dashboard></app-nav-bar-dashboard>\r\n    <div class=\"main-content\">\r\n      <div class=\"card\">\r\n        <div class=\"card-header card-header-primary text-center\">\r\n          <h4 class=\"card-title\">Registrar Ocorrencia</h4>\r\n        </div>\r\n        <div class=\"card-body\">\r\n          <form [formGroup]=\"chamadoForm\" (ngSubmit)=\"cadChamado(chamadoForm.value)\" class=\"form\">\r\n            <div class=\"form-group\">\r\n              <label class=\"col-md-4\">Descrição</label>\r\n              <input type=\"text\" class=\"form-control\" formControlName=\"descricao\"/>\r\n            </div>\r\n            <div class=\"form-group\">\r\n              <label class=\"col-md-4\" for=\"exampleFormControlSelect1\">Selecionar\r\n                Criticidade\r\n              </label>\r\n              <select class=\"form-control\" formControlName=\"criticidade\" id=\"exampleFormControlSelect1\">\r\n                <option></option>\r\n                <option>Baixo</option>\r\n                <option>Normal</option>\r\n                <option>Alto</option>\r\n              </select>\r\n            </div>\r\n            <div class=\"form-group\">\r\n              <label class=\"col-md-4\" for=\"exampleFormControlSelect2\">\r\n                Onde ocorreu\r\n              </label>\r\n              <select class=\"form-control\" formControlName=\"opcao\" id=\"exampleFormControlSelect2\">\r\n                <option></option>\r\n                <option>Cadastro</option>\r\n                <option>Login</option>\r\n                <option>Evento</option>\r\n                <option>Software</option>\r\n                <option>Dashboard</option>\r\n              </select>\r\n            </div>\r\n            <div class=\"form-group\">\r\n              <button type=\"submit\" [class.disabled]=\"angForm.invalid\" class=\"btn btn-primary\">\r\n                Enviar\r\n              </button>\r\n            </div>\r\n          </form>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n  <!-- <router-outlet></router-outlet> -->\r\n  <app-footer-dashboard></app-footer-dashboard>\r\n</div>"
+module.exports = "<div class=\"wrapper\">\r\n  <div class=\"sidebar\" data-color=\"danger\" data-background-color=\"white\" data-image=\"./assets/img/sidebar-1.jpg\">\r\n    <app-side-bar-dashboard></app-side-bar-dashboard>\r\n    <div class=\"sidebar-background\" style=\"background-image: url(./assets/img/sidebar-4.jpg)\"></div>\r\n  </div>\r\n  <div class=\"main-panel\">\r\n    <app-nav-bar-dashboard></app-nav-bar-dashboard>\r\n    <div class=\"main-content\">\r\n      <div class=\"card\">\r\n        <div class=\"card-header card-header-primary text-center\">\r\n          <h4 class=\"card-title\">Registrar Ocorrencia</h4>\r\n        </div>\r\n        <div class=\"card-body\">\r\n          <form [formGroup]=\"chamadoForm\" (ngSubmit)=\"cadChamado(chamadoForm.value)\" class=\"form\">\r\n            <div class=\"form-group\">\r\n              <label class=\"col-md-4\">Data</label>\r\n              <input type=\"text\" class=\"form-control\" formControlName=\"data\" />\r\n            </div>\r\n            <div class=\"form-group\">\r\n              <label class=\"col-md-4\">Hora</label>\r\n              <input type=\"text\" class=\"form-control\" formControlName=\"hora\" />\r\n            </div>\r\n            <div class=\"form-group\">\r\n              <label class=\"col-md-4\">Descrição</label>\r\n              <input type=\"text\" class=\"form-control\" formControlName=\"descricao\" />\r\n            </div>\r\n            <div class=\"form-group\">\r\n              <label class=\"col-md-4\" for=\"exampleFormControlSelect1\">Selecionar\r\n                Criticidade\r\n              </label>\r\n              <select class=\"form-control\" formControlName=\"criticidade\" id=\"exampleFormControlSelect1\">\r\n                <option></option>\r\n                <option>Baixo</option>\r\n                <option>Normal</option>\r\n                <option>Alto</option>\r\n              </select>\r\n            </div>\r\n            <div class=\"form-group\">\r\n              <label class=\"col-md-4\" for=\"exampleFormControlSelect2\">\r\n                Onde ocorreu\r\n              </label>\r\n              <select class=\"form-control\" formControlName=\"onde_ocorreu\" id=\"exampleFormControlSelect2\">\r\n                <option></option>\r\n                <option>Cadastro</option>\r\n                <option>Login</option>\r\n                <option>Evento</option>\r\n                <option>Software</option>\r\n                <option>Dashboard</option>\r\n              </select>\r\n            </div>\r\n            <div class=\"form-group\">\r\n              <label class=\"col-md-4\">Identificação do SoftSeven</label>\r\n              <input type=\"text\" class=\"form-control\" formControlName=\"fk_idSoft\" />\r\n            </div>\r\n            <div class=\"form-group\">\r\n              <button type=\"submit\" [disabled]=\"chamadoForm.invalid\" class=\"btn btn-primary\">\r\n                Enviar\r\n              </button>\r\n            </div>\r\n          </form>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n  <!-- <router-outlet></router-outlet> -->\r\n  <app-footer-dashboard></app-footer-dashboard>\r\n</div>"
 
 /***/ }),
 
@@ -1758,37 +1643,40 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var src_app_Site_services_users_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/Site/services/users.service */ "./src/app/Site/services/users.service.ts");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var src_app_Site_services_eventos_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/Site/services/eventos.service */ "./src/app/Site/services/eventos.service.ts");
 
 
 
 
 
 var ChamadosDashboardComponent = /** @class */ (function () {
-    function ChamadosDashboardComponent(fb, userService, router) {
+    function ChamadosDashboardComponent(fb, eventoService, router) {
         this.fb = fb;
-        this.userService = userService;
+        this.eventoService = eventoService;
         this.router = router;
         // this.createForm();
     }
-    ChamadosDashboardComponent.prototype.cadChamado = function () {
-    };
-    ChamadosDashboardComponent.prototype.login = function (formData) {
+    ChamadosDashboardComponent.prototype.cadChamado = function (formData) {
         var _this = this;
-        return this.userService.login(formData).subscribe(function (usr) {
-            _this.router.navigate(['/dashboard']);
-            // this.router.navigate([this.returnUrl]);
-            console.log(usr);
-        });
-        console.log(formData);
+        return this.eventoService.cadChamado(formData).subscribe(function (chamado) {
+            if (chamado) {
+                _this.eventoService.cadChamado(chamado);
+                confirm('Chamado Registrado');
+            }
+        }, function (err) { return console.log(err); });
     };
     ChamadosDashboardComponent.prototype.ngOnInit = function () {
-        this.angForm = this.fb.group({
+        var date = new Date();
+        this.chamadoForm = this.fb.group({
+            'data': [date.toLocaleDateString(), _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            'hora': [date.toLocaleTimeString(), _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
             'descricao': [null, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
             'criticidade': [null, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
-            'opcao': [null, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]
+            'onde_ocorreu': [null, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            'fk_idSoft': [null, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required]
         });
+        console.log(this.chamadoForm);
     };
     ChamadosDashboardComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -1796,8 +1684,8 @@ var ChamadosDashboardComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./chamados-dashboard.component.html */ "./src/app/dashboard/user-dashboard/chamados-dashboard/chamados-dashboard.component.html"),
             styles: [__webpack_require__(/*! ./chamados-dashboard.component.css */ "./src/app/dashboard/user-dashboard/chamados-dashboard/chamados-dashboard.component.css")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"], src_app_Site_services_users_service__WEBPACK_IMPORTED_MODULE_3__["UsersService"],
-            _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"], src_app_Site_services_eventos_service__WEBPACK_IMPORTED_MODULE_4__["EventoService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
     ], ChamadosDashboardComponent);
     return ChamadosDashboardComponent;
 }());
@@ -1824,7 +1712,7 @@ module.exports = "/* Tooltip container */\r\n#tooltip {\r\n    position: relativ
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"wrapper\">\r\n  <div class=\"sidebar\" data-color=\"danger\" data-background-color=\"white\" data-image=\"./assets/img/sidebar-1.jpg\">\r\n    <app-side-bar-dashboard></app-side-bar-dashboard>\r\n    <div class=\"sidebar-background\" style=\"background-image: url(./assets/img/sidebar-4.jpg)\"></div>\r\n  </div>\r\n  <div class=\"main-panel\">\r\n    <app-nav-bar-dashboard></app-nav-bar-dashboard>\r\n\r\n    <div class=\"main-content\">\r\n      <div class=\"card text-center\">\r\n\r\n        <button data-toggle=\"modal\" data-target=\"#exampleModal\" data-whatever=\"@mdo\"\r\n          class=\"btn btn-primary bmd-btn-fab\">\r\n          <p id=\"tooltiptext\">Cadastrar Maquina</p>\r\n          <i class=\"material-icons\">add_circle_outline</i>\r\n        </button>\r\n\r\n        <button data-toggle=\"modal\" data-target=\"#exampleModalEvento\" data-whatever=\"@mdo\"\r\n          class=\"btn btn-primary bmd-btn-fab\">\r\n          <p id=\"tooltiptext\">Cadastrar Evento</p>\r\n          <i class=\"material-icons\">add_circle_outline</i>\r\n        </button>\r\n\r\n      </div>\r\n      <div class=\"row\">\r\n        <div class=\"col-md-4\" *ngFor=\"let eventos of eventos; let i = index\">\r\n          <div class=\"card text-center\">\r\n            <div class=\"card-header bg-dark text-white d-flex justify-content-between align-itens-center\">\r\n              <p>Evento:{{eventos.id_Evento}}</p>\r\n              <button class=\"btn btn-danger\">\r\n                <i class=\"far fa-trash-alt\"></i>\r\n              </button>\r\n            </div>\r\n            <div class=\"card-body\">\r\n              <h5 class=\"card-title\">{{eventos.nomeEvento}}</h5>\r\n              <h6 class=\"card-subtitle mb-2 text-muted\">{{eventos.data}}{{eventos.hora}}</h6>\r\n              <p class=\"card-text\">{{eventos.tipoEvento}}</p>\r\n              <!-- <p class=\"card-text\">{{i}}</p> -->\r\n              <div class=\"row\">\r\n                <div id=\"colEdit\" class=\"col-sm\">\r\n                  <div id=\"tooltip\">\r\n                    <a class=\"btn btn-info btn-block\">\r\n                      <p id=\"tooltiptext\">Editar Evento</p>\r\n                      <i class=\"material-icons\">\r\n                        edit\r\n                      </i>\r\n                    </a>\r\n                  </div>\r\n                </div>\r\n                <div id=\"colEdit\" class=\"col-sm\">\r\n                  <div id=\"tooltip\">\r\n\r\n                    <!-- <button data-toggle=\"modal\" data-target=\"#exampleModal\" data-whatever=\"@mdo\" \r\n                    routerLink=\"/evento/{{user.id_usuario}}/cadastro-maquina\" type=\"button\"\r\n                      class=\"btn btn-primary bmd-btn-fab\">\r\n                      <p id=\"tooltiptext\">Inserir maquina</p>\r\n                      <i class=\"material-icons\">add_circle_outline</i>\r\n                    </button> -->\r\n                  </div>\r\n                </div>\r\n                <div id=\"colEdit\" class=\"col-sm\">\r\n                  <div id=\"tooltip\">\r\n                    <button type=\"button\" class=\"btn btn-primary bmd-btn-fab\">\r\n                      <p id=\"tooltiptext\">Visualizar</p>\r\n                      <i class=\"material-icons\">search</i>\r\n                    </button>\r\n                  </div>\r\n                </div>\r\n              </div>\r\n            </div>\r\n\r\n\r\n\r\n          </div>\r\n        </div>\r\n        <!--Cadastrar Maquina-->\r\n\r\n        <div class=\"modal fade\" id=\"exampleModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\"\r\n          aria-hidden=\"true\">\r\n          <div class=\"modal-dialog\" role=\"document\">\r\n            <div class=\"modal-content\">\r\n              <div class=\"modal-header\">\r\n                <h5 class=\"modal-title\" id=\"exampleModalLabel\">Nova Maquina</h5>\r\n                <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\r\n                  <span aria-hidden=\"true\">&times;</span>\r\n                </button>\r\n              </div>\r\n              <div class=\"modal-body\">\r\n                <form [formGroup]=\"maquinaForm\" (ngSubmit)=\"cadMaq(maquinaForm.value)\">\r\n                  <div class=\"form-group\">\r\n                    <label for=\"recipient-name\" class=\"col-form-label\">ID:</label>\r\n                    <input type=\"text\" formControlName=\"fk_idusuario\" class=\"form-control\" id=\"recipient-name\">\r\n                  </div>\r\n                  <div class=\"form-group\">\r\n                    <label class=\"col-md-4\" for=\"exampleFormControlSelect1\">Selecionar\r\n                      Evento\r\n                    </label>\r\n                    <select *ngFor=\"let eventos of eventos\" class=\"form-control\" formControlName=\"fk_idEvento\"\r\n                      id=\"exampleFormControlSelect1\">\r\n                      <option></option>\r\n                      <option>{{eventos.id_Evento}}</option>\r\n                    </select>\r\n                  </div>\r\n                  <div class=\"form-group\">\r\n                    <label for=\"message-text\" class=\"col-form-label\">Nome da maquina:</label>\r\n                    <input type=\"text\" formControlName=\"nome_soft\" class=\"form-control\" id=\"recipient-name\">\r\n                  </div>\r\n                  <button type=\"submit\" [disabled]=\"!maquinaForm.valid\"\r\n                    class=\"btn btn-primary btn-link btn-wd btn-lg\">Cadastrar</button>\r\n                </form>\r\n              </div>\r\n              <!-- <div class=\"modal-footer\">\r\n              <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>\r\n              <button type=\"button\" class=\"btn btn-primary\">Send message</button>\r\n            </div> -->\r\n            </div>\r\n          </div>\r\n        </div>\r\n        <!---->\r\n\r\n\r\n        <!--Cadastrar Evento-->\r\n        <div class=\"modal fade\" id=\"exampleModalEvento\" tabindex=\"-1\" role=\"dialog\"\r\n          aria-labelledby=\"exampleModalLabelEvento\" aria-hidden=\"true\">\r\n          <div class=\"modal-dialog\" role=\"document\">\r\n            <div class=\"modal-content\">\r\n              <div class=\"modal-header\">\r\n                <h5 class=\"modal-title\" id=\"exampleModalLabelEvento\">Novo Evento</h5>\r\n                <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\r\n                  <span aria-hidden=\"true\">&times;</span>\r\n                </button>\r\n              </div>\r\n              <div class=\"modal-body\">\r\n                <form [formGroup]=\"eventoForm\" (ngSubmit)=\"cadEvento(eventoForm.value)\">\r\n                  <div class=\"form-group\">\r\n                    <label for=\"recipient-name\" class=\"col-form-label\">ID:</label>\r\n                    <input type=\"text\" formControlName=\"fk_idUserSeven\" class=\"form-control\">\r\n                  </div>\r\n                  <div class=\"form-group\">\r\n                    <label for=\"recipient-name\" class=\"col-form-label\">Nome do Evento:</label>\r\n                    <input type=\"text\" formControlName=\"nomeEvento\" class=\"form-control\">\r\n                  </div>\r\n                  <div class=\"form-group\">\r\n                    <label for=\"recipient-name\" class=\"col-form-label\">Tipo de Evento:</label>\r\n                    <input type=\"text\" formControlName=\"tipoEvento\" class=\"form-control\">\r\n                  </div>\r\n                  <div class=\"form-group\">\r\n                    <label for=\"recipient-name\" class=\"col-form-label\">Data:</label>\r\n                    <input type=\"text\" class=\"form-control\" id=\"dataNascimento\" formControlName=\"data\">\r\n                  </div>\r\n                  <div class=\"form-group\">\r\n                    <label for=\"recipient-name\" class=\"col-form-label\">Hora:</label>\r\n                    <input type=\"text\" id=\"hora\" formControlName=\"hora\" class=\"form-control\">\r\n                  </div>\r\n                  <button type=\"submit\" [disabled]=\"!eventoForm.valid\"\r\n                    class=\"btn btn-primary btn-link btn-wd btn-lg\">Cadastrar</button>\r\n                </form>\r\n              </div>\r\n              <!-- <div class=\"modal-footer\">\r\n              <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>\r\n              <button type=\"button\" class=\"btn btn-primary\">Send message</button>\r\n            </div> -->\r\n            </div>\r\n          </div>\r\n        </div>\r\n\r\n\r\n\r\n\r\n\r\n        <!-- <router-outlet></router-outlet> -->\r\n      </div>\r\n    </div>\r\n    <app-footer-dashboard></app-footer-dashboard>\r\n\r\n  </div>"
+module.exports = "<div class=\"wrapper\">\r\n  <div class=\"sidebar\" data-color=\"danger\" data-background-color=\"white\" data-image=\"./assets/img/sidebar-1.jpg\">\r\n    <app-side-bar-dashboard></app-side-bar-dashboard>\r\n    <div class=\"sidebar-background\" style=\"background-image: url(./assets/img/sidebar-4.jpg)\"></div>\r\n  </div>\r\n  <div class=\"main-panel\">\r\n    <app-nav-bar-dashboard></app-nav-bar-dashboard>\r\n\r\n    <div class=\"main-content\">\r\n      <div class=\"card text-center\">\r\n\r\n        <button data-toggle=\"modal\" data-target=\"#exampleModal\" data-whatever=\"@mdo\"\r\n          class=\"btn btn-primary bmd-btn-fab\">\r\n          <p id=\"tooltiptext\">Cadastrar Maquina</p>\r\n          <i class=\"material-icons\">add_circle_outline</i>\r\n        </button>\r\n\r\n        <button data-toggle=\"modal\" data-target=\"#exampleModalEvento\" data-whatever=\"@mdo\"\r\n          class=\"btn btn-primary bmd-btn-fab\">\r\n          <p id=\"tooltiptext\">Cadastrar Evento</p>\r\n          <i class=\"material-icons\">add_circle_outline</i>\r\n        </button>\r\n\r\n      </div>\r\n      <div class=\"row\">\r\n        <div class=\"col-md-4\" *ngFor=\"let eventos of eventos; let i = index\">\r\n          <div class=\"card text-center\">\r\n            <div class=\"card-header bg-dark text-white d-flex justify-content-between align-itens-center\">\r\n              <p>Evento:{{eventos.id_Evento}}</p>\r\n              <button class=\"btn btn-danger\">\r\n                <i class=\"far fa-trash-alt\"></i>\r\n              </button>\r\n            </div>\r\n            <div class=\"card-body\">\r\n              <h5 class=\"card-title\">{{eventos.nomeEvento}}</h5>\r\n              <h6 class=\"card-subtitle mb-2 text-muted\">{{eventos.data}}{{eventos.hora}}</h6>\r\n              <p class=\"card-text\">{{eventos.tipoEvento}}</p>\r\n              <!-- <p class=\"card-text\">{{i}}</p> -->\r\n              <div class=\"row\">\r\n                <div id=\"colEdit\" class=\"col-sm\">\r\n                  <div id=\"tooltip\">\r\n                    <a class=\"btn btn-info btn-block\">\r\n                      <p id=\"tooltiptext\">Editar Evento</p>\r\n                      <i class=\"material-icons\">\r\n                        edit\r\n                      </i>\r\n                    </a>\r\n                  </div>\r\n                </div>\r\n                <div id=\"colEdit\" class=\"col-sm\">\r\n                  <div id=\"tooltip\">\r\n\r\n                    <!-- <button data-toggle=\"modal\" data-target=\"#exampleModal\" data-whatever=\"@mdo\" \r\n                    routerLink=\"/evento/{{user.id_usuario}}/cadastro-maquina\" type=\"button\"\r\n                      class=\"btn btn-primary bmd-btn-fab\">\r\n                      <p id=\"tooltiptext\">Inserir maquina</p>\r\n                      <i class=\"material-icons\">add_circle_outline</i>\r\n                    </button> -->\r\n                  </div>\r\n                </div>\r\n                <div id=\"colEdit\" class=\"col-sm\">\r\n                  <div id=\"tooltip\">\r\n                    <button [routerLink]=\"['visualizar-evento/', eventos.id_Evento ]\" type=\"button\"\r\n                      class=\"btn btn-primary bmd-btn-fab\">\r\n                      <p id=\"tooltiptext\">Visualizar </p>\r\n                      <i class=\"material-icons\">search</i>\r\n                    </button>\r\n                  </div>\r\n                </div>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n        <!--Cadastrar Maquina-->\r\n\r\n        <div class=\"modal fade\" id=\"exampleModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\"\r\n          aria-hidden=\"true\">\r\n          <div class=\"modal-dialog\" role=\"document\">\r\n            <div class=\"modal-content\">\r\n              <div class=\"modal-header\">\r\n                <h5 class=\"modal-title\" id=\"exampleModalLabel\">Nova Maquina</h5>\r\n                <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\r\n                  <span aria-hidden=\"true\">&times;</span>\r\n                </button>\r\n              </div>\r\n              <div class=\"modal-body\">\r\n                <form [formGroup]=\"maquinaForm\" (ngSubmit)=\"cadMaq(maquinaForm.value)\">\r\n                  <div class=\"form-group\">\r\n                    <label for=\"recipient-name\" class=\"col-form-label\">ID:</label>\r\n                    <input type=\"text\" formControlName=\"fk_idusuario\" class=\"form-control\" id=\"recipient-name\">\r\n                  </div>\r\n                  <div class=\"form-group\">\r\n                    <label class=\"col-md-4\" for=\"exampleFormControlSelect1\">Selecionar\r\n                      Evento\r\n                    </label>\r\n                    <select *ngFor=\"let eventos of eventos\" class=\"form-control\" formControlName=\"fk_idEvento\"\r\n                      id=\"exampleFormControlSelect1\">\r\n                      <option></option>\r\n                      <option>{{eventos.id_Evento}}</option>\r\n                    </select>\r\n                  </div>\r\n                  <div class=\"form-group\">\r\n                    <label for=\"message-text\" class=\"col-form-label\">Nome da maquina:</label>\r\n                    <input type=\"text\" formControlName=\"nome_soft\" class=\"form-control\" id=\"recipient-name\">\r\n                  </div>\r\n                  <button type=\"submit\" [disabled]=\"!maquinaForm.valid\"\r\n                    class=\"btn btn-primary btn-link btn-wd btn-lg\">Cadastrar</button>\r\n                </form>\r\n              </div>\r\n              <!-- <div class=\"modal-footer\">\r\n              <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>\r\n              <button type=\"button\" class=\"btn btn-primary\">Send message</button>\r\n            </div> -->\r\n            </div>\r\n          </div>\r\n        </div>\r\n        <!---->\r\n\r\n\r\n        <!--Cadastrar Evento-->\r\n        <div class=\"modal fade\" id=\"exampleModalEvento\" tabindex=\"-1\" role=\"dialog\"\r\n          aria-labelledby=\"exampleModalLabelEvento\" aria-hidden=\"true\">\r\n          <div class=\"modal-dialog\" role=\"document\">\r\n            <div class=\"modal-content\">\r\n              <div class=\"modal-header\">\r\n                <h5 class=\"modal-title\" id=\"exampleModalLabelEvento\">Novo Evento</h5>\r\n                <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\r\n                  <span aria-hidden=\"true\">&times;</span>\r\n                </button>\r\n              </div>\r\n              <div class=\"modal-body\">\r\n                <form [formGroup]=\"eventoForm\" (ngSubmit)=\"cadEvento(eventoForm.value)\">\r\n                  <div class=\"form-group\">\r\n                    <label for=\"recipient-name\" class=\"col-form-label\">ID:</label>\r\n                    <input type=\"text\" formControlName=\"fk_idUserSeven\" class=\"form-control\">\r\n                  </div>\r\n                  <div class=\"form-group\">\r\n                    <label for=\"recipient-name\" class=\"col-form-label\">Nome do Evento:</label>\r\n                    <input type=\"text\" formControlName=\"nomeEvento\" class=\"form-control\">\r\n                  </div>\r\n                  <div class=\"form-group\">\r\n                    <label for=\"recipient-name\" class=\"col-form-label\">Tipo de Evento:</label>\r\n                    <input type=\"text\" formControlName=\"tipoEvento\" class=\"form-control\">\r\n                  </div>\r\n                  <div class=\"form-group\">\r\n                    <label for=\"recipient-name\" class=\"col-form-label\">Data:</label>\r\n                    <input type=\"text\" class=\"form-control\" id=\"dataNascimento\" formControlName=\"data\">\r\n                  </div>\r\n                  <div class=\"form-group\">\r\n                    <label for=\"recipient-name\" class=\"col-form-label\">Hora:</label>\r\n                    <input type=\"text\" id=\"hora\" formControlName=\"hora\" class=\"form-control\">\r\n                  </div>\r\n                  <button type=\"submit\" [disabled]=\"!eventoForm.valid\"\r\n                    class=\"btn btn-primary btn-link btn-wd btn-lg\">Cadastrar</button>\r\n                </form>\r\n              </div>\r\n              <!-- <div class=\"modal-footer\">\r\n              <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>\r\n              <button type=\"button\" class=\"btn btn-primary\">Send message</button>\r\n            </div> -->\r\n            </div>\r\n          </div>\r\n        </div>\r\n\r\n\r\n\r\n\r\n\r\n        <!-- <router-outlet></router-outlet> -->\r\n      </div>\r\n    </div>\r\n    <app-footer-dashboard></app-footer-dashboard>\r\n\r\n  </div>"
 
 /***/ }),
 
@@ -1910,6 +1798,9 @@ var EventoDashboardComponent = /** @class */ (function () {
             'fk_idUserSeven': [params.id, _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required]
         });
     };
+    EventoDashboardComponent.prototype.test = function (i) {
+        console.log(i);
+    };
     // getEventosById() {
     //   const params = this.activatedRoute.snapshot.params;
     //   this.eventoService.getEventoById(params.id).subscribe(
@@ -1924,7 +1815,7 @@ var EventoDashboardComponent = /** @class */ (function () {
     EventoDashboardComponent.prototype.getEventosById = function () {
         var _this = this;
         var params = this.activatedRoute.snapshot.params;
-        this.eventoService.getEventoById(params.id).subscribe(function (res) {
+        this.eventoService.getAllEventoById(params.id).subscribe(function (res) {
             var allEventoById = res['recordset'].map(function (res) { return res; });
             var eventoById = res['recordset'].map(function (res) { return res.id_Evento; });
             var nome_evento = res['recordset'].map(function (res) { return res.nomeEvento; });
@@ -2351,7 +2242,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- <div class=\"container\">\r\n  <div class=\"col-md-6 col-md-offset-3 loginBox\">\r\n    Welcome, {{id}}\r\n    <a href=\"javascript:void(0);\" (click)=\"logout()\">Logout</a>\r\n  </div>\r\n</div> -->\r\n<div class=\"wrapper\">\r\n    <div class=\"sidebar\" data-color=\"danger\" data-background-color=\"white\" data-image=\"./assets/img/sidebar-1.jpg\">\r\n        <app-side-bar-dashboard></app-side-bar-dashboard>\r\n        <div class=\"sidebar-background\" style=\"background-image: url(./assets/img/sidebar-4.jpg)\"></div>\r\n    </div>\r\n    <div class=\"main-panel\">\r\n        <app-nav-bar-dashboard></app-nav-bar-dashboard>\r\n        <div class=\"main-content\">\r\n            <div class=\"container-fluid\">\r\n                <div class=\"row\">\r\n                    <div class=\"col-lg-3 col-md-6 col-sm-6\" *ngFor=\"let hardware of hardware\">\r\n                        <div class=\"card card-stats\">\r\n                            <div class=\"card-header card-header-warning card-header-icon\">\r\n                                <div class=\"card-icon\">\r\n                                    <i class=\"material-icons\">content_copy</i>\r\n                                </div>\r\n                                <p class=\"card-category\">CPU</p>\r\n                                <h3 class=\"card-title\">\r\n                                    <small>{{hardware.fabricante}}</small>\r\n                                </h3>\r\n                            </div>\r\n                            <div class=\"card-footer\">\r\n                                <div class=\"stats\">\r\n                                    <i class=\"material-icons\">cached</i>\r\n                                    <small class=\"card-title\">{{hardware.nome_processador}}</small>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"col-lg-3 col-md-6 col-sm-6\">\r\n                        <div class=\"card card-stats\">\r\n                            <div class=\"card-header card-header-danger card-header-icon\">\r\n                                <div class=\"card-icon\">\r\n                                    <i class=\"material-icons\">info_outline</i>\r\n                                </div>\r\n                                <p class=\"card-category\">??</p>\r\n                                <h3 class=\"card-title\">??</h3>\r\n                            </div>\r\n                            <div class=\"card-footer\">\r\n                                <div class=\"stats\">\r\n                                    <i class=\"material-icons\">cached</i>\r\n                                    <a href=\"\">Atualizar</a>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n\r\n                    <div class=\"col-lg-3 col-md-6 col-sm-6\">\r\n                        <div class=\"card card-stats\">\r\n                            <div class=\"card-header card-header-info card-header-icon\">\r\n                                <div class=\"card-icon\">\r\n                                    <i class=\"material-icons\">#</i>\r\n                                </div>\r\n                                <p class=\"card-category\">??</p>\r\n                                <h3 class=\"card-title\">??</h3>\r\n                            </div>\r\n                            <div class=\"card-footer\">\r\n                                <div class=\"stats\">\r\n                                    <i class=\"material-icons\">cached</i>\r\n                                    <a href=\"\">Atualizar</a>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n\r\n\r\n\r\n\r\n\r\n\r\n                <div class=\"row\">\r\n                    <div class=\"col-md-4\">\r\n                        <div class=\"card card-chart\">\r\n                            <div class=\"container\">\r\n                                <!-- <div class=\"card-header card-header-success\"> -->\r\n                                <div *ngIf=\"chartTemperaturaCPU\">\r\n                                    <canvas id=\"canvas\">\r\n                                        {{chartTemperaturaCPU}}\r\n                                    </canvas>\r\n                                </div>\r\n                                <!-- </div> -->\r\n                            </div>\r\n                            <!-- <div class=\"card-header card-header-success\">\r\n                                    \r\n                                </div> -->\r\n                            <div class=\"card-body\">\r\n                                <h4 class=\"card-title\">??</h4>\r\n                                <p class=\"card-category\">\r\n                                    <span class=\"text-success\"><i class=\"fa fa-long-arrow-up\"></i> ?? </span> ??</p>\r\n                            </div>\r\n                            <div class=\"card-footer\">\r\n                                <div class=\"stats\">\r\n                                    <i class=\"material-icons\">access_time</i> updated 4 minutes ago\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n\r\n                    <div class=\"col-md-4\">\r\n                        <div class=\"card card-chart\">\r\n                            <div class=\"container\">\r\n                                <!-- <div class=\"card-header card-header-danger\"> -->\r\n                                <div *ngIf=\"chartCPU\">\r\n                                    <canvas id=\"cpu\">\r\n                                        {{chartCPU}}\r\n                                    </canvas>\r\n                                </div>\r\n                                <!-- </div> -->\r\n                            </div>\r\n                            <!-- <div class=\"card-header card-header-warning\">\r\n                                    <div class=\"ct-chart\">\r\n                                    </div>\r\n                                </div> -->\r\n                            <div class=\"card-body\">\r\n                                <h4 class=\"card-title\">??</h4>\r\n                                <p class=\"card-category\">??</p>\r\n                            </div>\r\n                            <div class=\"card-footer\">\r\n                                <div class=\"stats\">\r\n                                    <i class=\"material-icons\">access_time</i> updated 4 minutes ago\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n\r\n                    <div class=\"col-md-4\">\r\n                        <div class=\"card card-chart\">\r\n                            <div class=\"container\">\r\n                                <div *ngIf=\"chartMemoriaRam\">\r\n                                    <canvas id=\"memoriaRam\">\r\n                                        {{chartMemoriaRam}}\r\n                                    </canvas>\r\n                                </div>\r\n                            </div>\r\n                            <div class=\"card-body\">\r\n                                <h4 class=\"card-title\">??</h4>\r\n                                <p class=\"card-category\">??</p>\r\n                            </div>\r\n                            <div class=\"card-footer\">\r\n                                <div class=\"stats\">\r\n                                    <i class=\"material-icons\">access_time</i> updated 4 minutes ago\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                    <!-- <div class=\"container-fluid\">\r\n                    <div class=\"row\">\r\n                        <div class=\"col-md-12\">\r\n                            <div class=\"card card-plain\">\r\n                                <div class=\"card-header card-header-danger\">\r\n                                    <h4 class=\"card-title mt-0\"> #</h4>\r\n                                </div>\r\n                                <div class=\"card-body\">\r\n                                    <div class=\"table-responsive\">\r\n                                        <table class=\"table table-hover\">\r\n                                            <thead class=\"\">\r\n                                                <th>\r\n                                                    ID\r\n                                                </th>\r\n                                                <th>\r\n                                                    Nome\r\n                                                </th>\r\n                                                <th>\r\n                                                    Usuario\r\n                                                </th>\r\n                                                <th>\r\n                                                    Organizadora\r\n                                                </th>\r\n                                                <th>\r\n                                                    Status\r\n                                                </th>\r\n                                            </thead>\r\n                                            <tbody>\r\n                                                <tr>\r\n                                                    <td>\r\n                                                        1\r\n                                                    </td>\r\n                                                    <td>\r\n\r\n                                                    </td>\r\n                                                    <td>\r\n\r\n                                                    </td>\r\n                                                    <td>\r\n\r\n                                                    </td>\r\n                                                    <td>\r\n                                                    </td>\r\n                                                </tr>\r\n                                                <tr>\r\n                                                    <td>\r\n                                                        2\r\n                                                    </td>\r\n                                                    <td>\r\n                                                    </td>\r\n                                                    <td>\r\n                                                    </td>\r\n                                                    <td>\r\n                                                    </td>\r\n                                                    <td>\r\n                                                    </td>\r\n                                                </tr>\r\n                                                <tr>\r\n                                                    <td>\r\n                                                        3\r\n                                                    </td>\r\n                                                    <td>\r\n                                                    </td>\r\n                                                    <td>\r\n                                                    </td>\r\n                                                    <td>\r\n                                                    </td>\r\n                                                    <td>\r\n                                                    </td>\r\n                                                </tr>\r\n                                                <tr>\r\n                                                    <td>\r\n                                                        4\r\n                                                    </td>\r\n                                                    <td>\r\n                                                    </td>\r\n                                                    <td>\r\n                                                    </td>\r\n                                                    <td>\r\n                                                    </td>\r\n                                                    <td>\r\n                                                    </td>\r\n                                                </tr>\r\n                                                <tr>\r\n                                                    <td>\r\n                                                        5\r\n                                                    </td>\r\n                                                    <td>\r\n                                                    </td>\r\n                                                    <td>\r\n                                                    </td>\r\n                                                    <td>\r\n                                                    </td>\r\n                                                    <td>\r\n                                                    </td>\r\n                                                </tr>\r\n                                                <tr>\r\n                                                    <td>\r\n                                                        6\r\n                                                    </td>\r\n                                                    <td>\r\n                                                    </td>\r\n                                                    <td>\r\n                                                    </td>\r\n                                                    <td>\r\n                                                    </td>\r\n                                                    <td>\r\n                                                    </td>\r\n                                                </tr>\r\n                                            </tbody>\r\n                                        </table>\r\n                                    </div>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                </div> -->\r\n                </div>\r\n\r\n                <app-footer-dashboard></app-footer-dashboard>\r\n            </div>\r\n        </div>\r\n    </div>"
+module.exports = "<!-- <div class=\"container\">\r\n  <div class=\"col-md-6 col-md-offset-3 loginBox\">\r\n    Welcome, {{id}}\r\n    <a href=\"javascript:void(0);\" (click)=\"logout()\">Logout</a>\r\n  </div>\r\n</div> -->\r\n<div class=\"wrapper\">\r\n    <div class=\"sidebar\" data-color=\"danger\" data-background-color=\"white\" data-image=\"./assets/img/sidebar-1.jpg\">\r\n        <app-side-bar-dashboard></app-side-bar-dashboard>\r\n        <div class=\"sidebar-background\" style=\"background-image: url(./assets/img/sidebar-4.jpg)\"></div>\r\n    </div>\r\n    <div class=\"main-panel\">\r\n        <app-nav-bar-dashboard></app-nav-bar-dashboard>\r\n        <div class=\"main-content\">\r\n            <div class=\"container-fluid\">\r\n                <div class=\"row\">\r\n\r\n                    <div class=\"col-lg-3 col-md-6 col-sm-6\" *ngFor=\"let hardware of hardware\">\r\n                        <div class=\"card card-stats\">\r\n                            <div class=\"card-header card-header-warning card-header-icon\">\r\n                                <div class=\"card-icon\">\r\n                                    <small>{{hardware.nome_soft}}</small><i class=\"material-icons\">content_copy</i>\r\n                                </div>\r\n                                <br><br><br>\r\n                                <p class=\"card-category\">{{hardware.id_Hardware}}</p>\r\n                                <h3 class=\"card-title\">\r\n                                    <small>Fabricante: {{hardware.fabricante}}</small>\r\n                                </h3>\r\n                            </div>\r\n                            <div class=\"card-footer\">\r\n                                <div class=\"stats\">\r\n                                    <i class=\"material-icons\">cached</i>\r\n                                    <small class=\"card-title\">{{hardware.nome_processador}}</small>\r\n                                    <small class=\"card-title\">{{hardware.modelo_processador}}</small>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n\r\n                    <div class=\"col-lg-3 col-md-6 col-sm-6\" *ngFor=\"let chamados of chamados\">\r\n                        <div class=\"card card-stats\">\r\n                            <div class=\"card-header card-header-danger card-header-icon\">\r\n                                <div class=\"card-icon\">\r\n                                    <i class=\"material-icons\">info_outline</i>\r\n                                </div>\r\n                                <p class=\"card-category\">Chamados Abertos</p>\r\n                                <h3 class=\"card-title\">{{chamados.total_de_chamado}}</h3>\r\n                            </div>\r\n                            <!-- <div class=\"card-footer\">\r\n                                <div class=\"stats\">\r\n                                    <i class=\"material-icons\">cached</i>\r\n                                    <a href=\"\">Atualizar</a>\r\n                                </div>\r\n                            </div> -->\r\n                        </div>\r\n                    </div>\r\n\r\n                    <!-- <div class=\"col-lg-3 col-md-6 col-sm-6\">\r\n                        <div class=\"card card-stats\">\r\n                            <div class=\"card-header card-header-info card-header-icon\">\r\n                                <div class=\"card-icon\">\r\n                                    <i class=\"material-icons\">#</i>\r\n                                </div>\r\n                                <p class=\"card-category\">??</p>\r\n                                <h3 class=\"card-title\">??</h3>\r\n                            </div>\r\n                            <div class=\"card-footer\">\r\n                                <div class=\"stats\">\r\n                                    <i class=\"material-icons\">cached</i>\r\n                                    <a href=\"\">Atualizar</a>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                    </div> -->\r\n                </div>\r\n\r\n                <div class=\"row\">\r\n                    <div class=\"col-md-4\">\r\n                        <div class=\"card card-chart\">\r\n                            <div class=\"container\">\r\n                                <!-- <div class=\"card-header card-header-success\"> -->\r\n                                <div *ngIf=\"chartTemperaturaCPU\">\r\n                                    <canvas id=\"canvas\">\r\n                                        {{chartTemperaturaCPU}}\r\n                                    </canvas>\r\n                                </div>\r\n                                <!-- </div> -->\r\n                            </div>\r\n                            <!-- <div class=\"card-header card-header-success\">\r\n                                    \r\n                                </div> -->\r\n                            <!-- <div class=\"card-body\">\r\n                                <h4 class=\"card-title\">??</h4>\r\n                                <p class=\"card-category\">\r\n                                    <span class=\"text-success\"><i class=\"fa fa-long-arrow-up\"></i> ?? </span> ??</p>\r\n                            </div>\r\n                            <div class=\"card-footer\">\r\n                                <div class=\"stats\">\r\n                                    <i class=\"material-icons\">access_time</i> updated 4 minutes ago\r\n                                </div>\r\n                            </div> -->\r\n                        </div>\r\n                    </div>\r\n\r\n                    <div class=\"col-md-4\">\r\n                        <div class=\"card card-chart\">\r\n                            <div class=\"container\">\r\n                                <!-- <div class=\"card-header card-header-danger\"> -->\r\n                                <div *ngIf=\"chartCPU\">\r\n                                    <canvas id=\"cpu\">\r\n                                        {{chartCPU}}\r\n                                    </canvas>\r\n                                </div>\r\n                                <!-- </div> -->\r\n                            </div>\r\n                            <!-- <div class=\"card-header card-header-warning\">\r\n                                    <div class=\"ct-chart\">\r\n                                    </div>\r\n                                </div> -->\r\n                            <!-- <div class=\"card-body\">\r\n                                <h4 class=\"card-title\">??</h4>\r\n                                <p class=\"card-category\">??</p>\r\n                            </div>\r\n                            <div class=\"card-footer\">\r\n                                <div class=\"stats\">\r\n                                    <i class=\"material-icons\">access_time</i> updated 4 minutes ago\r\n                                </div>\r\n                            </div> -->\r\n                        </div>\r\n                    </div>\r\n\r\n                    <div class=\"col-md-4\">\r\n                        <div class=\"card card-chart\">\r\n                            <div class=\"container\">\r\n                                <div *ngIf=\"chartMemoriaRam\">\r\n                                    <canvas id=\"memoriaRam\">\r\n                                        {{chartMemoriaRam}}\r\n                                    </canvas>\r\n                                </div>\r\n                            </div>\r\n                            <!-- <div class=\"card-body\">\r\n                                <h4 class=\"card-title\">??</h4>\r\n                                <p class=\"card-category\">??</p>\r\n                            </div>\r\n                            <div class=\"card-footer\">\r\n                                <div class=\"stats\">\r\n                                    <i class=\"material-icons\">access_time</i> updated 4 minutes ago\r\n                                </div>\r\n                            </div> -->\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"container-fluid\">\r\n                        <div class=\"row\">\r\n                            <div class=\"col-md-12\">\r\n                                <div class=\"card card-plain\">\r\n                                    <div class=\"card-header card-header-danger\">\r\n                                        <h4 class=\"card-title mt-0\"> Processos Ativos</h4>\r\n                                    </div>\r\n                                    <div class=\"card-body\">\r\n                                        <div class=\"table-responsive\">\r\n                                            <table class=\"table table-hover\">\r\n                                                <thead>\r\n                                                    <th>\r\n                                                        ID:Processo\r\n                                                    </th>\r\n                                                    <th>\r\n                                                        Nome do Processo\r\n                                                    </th>\r\n                                                    <th>\r\n                                                        PID\r\n                                                    </th>\r\n                                                    <th>\r\n                                                        Memoria\r\n                                                    </th>\r\n                                                </thead>\r\n                                                <tbody>\r\n                                                    <tr *ngFor=\"let processo of processo\">\r\n                                                        <td>\r\n                                                            {{processo.id_processo}}\r\n                                                        </td>\r\n                                                        <td>\r\n                                                            {{processo.nome_processo}}\r\n                                                        </td>\r\n                                                        <td>\r\n                                                            {{processo.pid}}\r\n                                                        </td>\r\n                                                        <td>\r\n                                                            {{processo.memoria}}\r\n                                                        </td>\r\n                                                    </tr>\r\n                                                </tbody>\r\n                                            </table>\r\n                                        </div>\r\n                                    </div>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n\r\n                <app-footer-dashboard></app-footer-dashboard>\r\n            </div>\r\n        </div>\r\n    </div>"
 
 /***/ }),
 
@@ -2372,6 +2263,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var src_app_Site_services_grafico_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/Site/services/grafico.service */ "./src/app/Site/services/grafico.service.ts");
 /* harmony import */ var src_app_Site_services_users_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/Site/services/users.service */ "./src/app/Site/services/users.service.ts");
+/* harmony import */ var src_app_Site_services_eventos_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/Site/services/eventos.service */ "./src/app/Site/services/eventos.service.ts");
+
 
 
 
@@ -2379,16 +2272,19 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var PerfilDashboardComponent = /** @class */ (function () {
-    function PerfilDashboardComponent(router, chartjs, usersService, activatedRoute) {
+    function PerfilDashboardComponent(router, chartjs, usersService, activatedRoute, eventoService) {
         this.router = router;
         this.chartjs = chartjs;
         this.usersService = usersService;
         this.activatedRoute = activatedRoute;
+        this.eventoService = eventoService;
         this.chartTemperaturaCPU = [];
         this.chartMemoriaRam = [];
         this.chartCPU = [];
         this.user = [];
         this.hardware = [];
+        this.processo = [];
+        this.chamados = [];
     }
     PerfilDashboardComponent.prototype.ngOnInit = function () {
         var params = this.activatedRoute.snapshot.params;
@@ -2397,6 +2293,8 @@ var PerfilDashboardComponent = /** @class */ (function () {
         this.chartTempMaxTempMin();
         this.chartUsoMemoriaRam();
         this.chartCPUDisponivelEmUso();
+        this.getProcesso();
+        this.getTotalChamado();
     };
     PerfilDashboardComponent.prototype.getHardwareById = function () {
         var _this = this;
@@ -2404,6 +2302,22 @@ var PerfilDashboardComponent = /** @class */ (function () {
         this.usersService.getHardware(params.id).subscribe(function (res) {
             _this.hardware = res;
         }, function (err) { return console.error(err); });
+    };
+    PerfilDashboardComponent.prototype.getTotalChamado = function () {
+        var _this = this;
+        var params = this.activatedRoute.snapshot.params;
+        this.eventoService.getTotalRowsChamado(params.id).subscribe(function (res) {
+            _this.chamados = res;
+            console.log(res);
+        }, function (err) { return console.log(err); });
+    };
+    PerfilDashboardComponent.prototype.getProcesso = function () {
+        var _this = this;
+        var params = this.activatedRoute.snapshot.params;
+        this.eventoService.getProcesso(params.id).subscribe(function (res) {
+            _this.processo = res;
+            console.log(res);
+        }, function (err) { return console.log(err); });
     };
     PerfilDashboardComponent.prototype.chartCPUDisponivelEmUso = function () {
         var _this = this;
@@ -2555,7 +2469,8 @@ var PerfilDashboardComponent = /** @class */ (function () {
             styles: [__webpack_require__(/*! ./perfil-dashboard.component.css */ "./src/app/dashboard/user-dashboard/perfil-dashboard/perfil-dashboard.component.css")]
         }),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"], src_app_Site_services_grafico_service__WEBPACK_IMPORTED_MODULE_4__["GraficoService"],
-            src_app_Site_services_users_service__WEBPACK_IMPORTED_MODULE_5__["UsersService"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"]])
+            src_app_Site_services_users_service__WEBPACK_IMPORTED_MODULE_5__["UsersService"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"],
+            src_app_Site_services_eventos_service__WEBPACK_IMPORTED_MODULE_6__["EventoService"]])
     ], PerfilDashboardComponent);
     return PerfilDashboardComponent;
 }());
@@ -2751,6 +2666,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _evento_dashboard_evento_dashboard_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./evento-dashboard/evento-dashboard.component */ "./src/app/dashboard/user-dashboard/evento-dashboard/evento-dashboard.component.ts");
 /* harmony import */ var _chamados_dashboard_chamados_dashboard_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./chamados-dashboard/chamados-dashboard.component */ "./src/app/dashboard/user-dashboard/chamados-dashboard/chamados-dashboard.component.ts");
 /* harmony import */ var src_app_Site_services_guard_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/Site/services/guard.service */ "./src/app/Site/services/guard.service.ts");
+/* harmony import */ var _visualizar_evento_visualizar_evento_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./visualizar-evento/visualizar-evento.component */ "./src/app/dashboard/user-dashboard/visualizar-evento/visualizar-evento.component.ts");
+
 
 
 
@@ -2765,7 +2682,8 @@ var routes = [
     { path: 'perfil/:id', component: _perfil_dashboard_perfil_dashboard_component__WEBPACK_IMPORTED_MODULE_4__["PerfilDashboardComponent"], canActivate: [src_app_Site_services_guard_service__WEBPACK_IMPORTED_MODULE_7__["GuardService"]] },
     { path: 'evento/:id', component: _evento_dashboard_evento_dashboard_component__WEBPACK_IMPORTED_MODULE_5__["EventoDashboardComponent"], canActivate: [src_app_Site_services_guard_service__WEBPACK_IMPORTED_MODULE_7__["GuardService"]] },
     { path: 'evento/:id/cadastro-maquina', component: _perfil_dashboard_perfil_dashboard_component__WEBPACK_IMPORTED_MODULE_4__["PerfilDashboardComponent"] },
-    { path: 'abrir-chamado/:id', component: _chamados_dashboard_chamados_dashboard_component__WEBPACK_IMPORTED_MODULE_6__["ChamadosDashboardComponent"], canActivate: [src_app_Site_services_guard_service__WEBPACK_IMPORTED_MODULE_7__["GuardService"]] }
+    { path: 'abrir-chamado/:id', component: _chamados_dashboard_chamados_dashboard_component__WEBPACK_IMPORTED_MODULE_6__["ChamadosDashboardComponent"], canActivate: [src_app_Site_services_guard_service__WEBPACK_IMPORTED_MODULE_7__["GuardService"]] },
+    { path: 'evento/:id/visualizar-evento/:id', component: _visualizar_evento_visualizar_evento_component__WEBPACK_IMPORTED_MODULE_8__["VisualizarEventoComponent"] }
 ];
 var UserDashboardRoutingModule = /** @class */ (function () {
     function UserDashboardRoutingModule() {
@@ -2806,6 +2724,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _evento_dashboard_evento_dashboard_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./evento-dashboard/evento-dashboard.component */ "./src/app/dashboard/user-dashboard/evento-dashboard/evento-dashboard.component.ts");
 /* harmony import */ var _chamados_dashboard_chamados_dashboard_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./chamados-dashboard/chamados-dashboard.component */ "./src/app/dashboard/user-dashboard/chamados-dashboard/chamados-dashboard.component.ts");
 /* harmony import */ var _footer_dashboard_footer_dashboard_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./footer-dashboard/footer-dashboard.component */ "./src/app/dashboard/user-dashboard/footer-dashboard/footer-dashboard.component.ts");
+/* harmony import */ var _visualizar_evento_visualizar_evento_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./visualizar-evento/visualizar-evento.component */ "./src/app/dashboard/user-dashboard/visualizar-evento/visualizar-evento.component.ts");
+
 
 
 
@@ -2832,7 +2752,8 @@ var UserDashboardModule = /** @class */ (function () {
                 _side_bar_dashboard_side_bar_dashboard_component__WEBPACK_IMPORTED_MODULE_9__["SideBarDashboardComponent"],
                 _evento_dashboard_evento_dashboard_component__WEBPACK_IMPORTED_MODULE_10__["EventoDashboardComponent"],
                 _chamados_dashboard_chamados_dashboard_component__WEBPACK_IMPORTED_MODULE_11__["ChamadosDashboardComponent"],
-                _footer_dashboard_footer_dashboard_component__WEBPACK_IMPORTED_MODULE_12__["FooterDashboardComponent"]
+                _footer_dashboard_footer_dashboard_component__WEBPACK_IMPORTED_MODULE_12__["FooterDashboardComponent"],
+                _visualizar_evento_visualizar_evento_component__WEBPACK_IMPORTED_MODULE_13__["VisualizarEventoComponent"]
             ],
             exports: [_user_dashboard_user_dashboard_component__WEBPACK_IMPORTED_MODULE_5__["UserDashboardComponent"]],
             imports: [
@@ -2868,7 +2789,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"wrapper\">\r\n    <div class=\"sidebar\" data-color=\"danger\" data-background-color=\"white\" data-image=\"./assets/img/sidebar-1.jpg\">\r\n        <app-side-bar-dashboard></app-side-bar-dashboard>\r\n        <div class=\"sidebar-background\" style=\"background-image: url(./assets/img/sidebar-4.jpg)\"></div>\r\n    </div>\r\n    <div class=\"main-panel\">\r\n        <app-nav-bar-dashboard></app-nav-bar-dashboard>\r\n        <div class=\"main-content\">\r\n            <main role=\"main\">\r\n                <!-- Main jumbotron for a primary marketing message or call to action -->\r\n                <div class=\"jumbotron\">\r\n                    <div class=\"container\">\r\n                        <h1 class=\"display-3\">Seven Soft 7</h1>\r\n                        <p>Este é a pagina inicial do nosso dashboard, no menu a esquerda, voce irá encontrar\r\n                            direcionadores para as outras pagina do dashboard. Pode navegar entre seu perfil e ter as\r\n                            ultima informações do monitoramento, seus eventos que estao acontecendo, os que vao\r\n                            acontecer junto com as maquina dos jogadores que estao sendo monitoradas</p>\r\n                    </div>\r\n                </div>\r\n                <div class=\"container\">\r\n                    <!-- Example row of columns -->\r\n                    <div class=\"row\">\r\n                        <div class=\"col-md-4\">\r\n                            <h2>Perfil</h2>\r\n                            <p>Perfil da organizadora, com as informações gerais</p>\r\n                            <p>\r\n                                <a class=\"btn btn-secondary\" href=\"#\" role=\"button\">View details &raquo;</a>\r\n                            </p>\r\n                        </div>\r\n                        <div class=\"col-md-4\">\r\n                            <h2>Heading</h2>\r\n                            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus\r\n                                commodo, tortor\r\n                                mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem\r\n                                malesuada\r\n                                magna mollis euismod. Donec sed odio dui. </p>\r\n                            <p>\r\n                                <a class=\"btn btn-secondary\" href=\"#\" role=\"button\">View details &raquo;</a>\r\n                            </p>\r\n                        </div>\r\n                        <div class=\"col-md-4\">\r\n                            <h2>Acesso:\r\n                                <h6> Arbitro</h6>\r\n                            </h2>\r\n                            <p>Seção restrita ao acesso do arbitro do campeonato da organizadora. Com a credencial\r\n                                de arbitro, nesta seção, ele poderá ver o dashboard com as informações das maquina dos\r\n                                jogadores.\r\n                            </p>\r\n                            <p>\r\n                                <a class=\"btn btn-secondary\" href=\"#\" role=\"button\">Entrar &raquo;</a>\r\n                            </p>\r\n                        </div>\r\n                    </div>\r\n                    <hr>\r\n                </div>\r\n                <!-- /container -->\r\n                <div class=\"container\">\r\n                    <div class=\"row\">\r\n                        <div class=\"card-body\">\r\n                            <iframe src=\"https://discordapp.com/widget?id=580178935308877835&theme=dark\" width=\"350\"\r\n                                height=\"500\" allowtransparency=\"true\" frameborder=\"0\"></iframe>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n            </main>\r\n        </div>\r\n        <app-footer-dashboard></app-footer-dashboard>\r\n    </div>\r\n</div>"
+module.exports = "<div class=\"wrapper\">\r\n    <div class=\"sidebar\" data-color=\"danger\" data-background-color=\"white\" data-image=\"./assets/img/sidebar-1.jpg\">\r\n        <app-side-bar-dashboard></app-side-bar-dashboard>\r\n        <div class=\"sidebar-background\" style=\"background-image: url(./assets/img/sidebar-4.jpg)\"></div>\r\n    </div>\r\n    <div class=\"main-panel\">\r\n        <app-nav-bar-dashboard></app-nav-bar-dashboard>\r\n        <div class=\"main-content\">\r\n            <main role=\"main\">\r\n                <!-- Main jumbotron for a primary marketing message or call to action -->\r\n                <div class=\"jumbotron\">\r\n                    <div class=\"container\">\r\n                        <h1 class=\"display-3\">Seven Soft 7</h1>\r\n                        <p>Este é a pagina inicial do nosso dashboard, no menu a esquerda, voce irá encontrar\r\n                            direcionadores para as outras pagina do dashboard. Pode navegar entre seu perfil e ter as\r\n                            ultima informações do monitoramento, seus eventos que estao acontecendo, os que vao\r\n                            acontecer junto com as maquina dos jogadores que estao sendo monitoradas</p>\r\n                    </div>\r\n                </div>\r\n                <div class=\"container\">\r\n                    <!-- Example row of columns -->\r\n                    <div class=\"row\">\r\n                        <div class=\"col-md-4\">\r\n                            <h2>Perfil</h2>\r\n                            <p>Perfil da organizadora, com as informações gerais</p>\r\n                        </div>\r\n                        <div class=\"col-md-4\">\r\n                            <h2>Eventos</h2>\r\n                            <p>Na aba 'Visualizar Eventos, é a seção disponivel para a organizadora,\r\n                                manter atualizada seus eventos de jogos e com as maquina ligadas para cada evento\r\n                                especifico'</p>\r\n                        </div>\r\n                        <div class=\"col-md-4\">\r\n                            <h2>Acesso:\r\n                                <h6> Arbitro</h6>\r\n                            </h2>\r\n                            <p>Seção restrita ao acesso do arbitro do campeonato da organizadora. Com a credencial\r\n                                de arbitro, nesta seção, ele poderá ver o dashboard com as informações das maquina dos\r\n                                jogadores.\r\n                            </p>\r\n                            <p>\r\n                                <a class=\"btn btn-secondary\" href=\"#\" role=\"button\">Entrar &raquo;</a>\r\n                            </p>\r\n                        </div>\r\n                    </div>\r\n                    <hr>\r\n                </div>\r\n                <!-- /container -->\r\n                <div class=\"container\">\r\n                    <div class=\"row\">\r\n                        <div class=\"card-body\">\r\n                            <iframe src=\"https://discordapp.com/widget?id=580178935308877835&theme=dark\" width=\"350\"\r\n                                height=\"500\" allowtransparency=\"true\" frameborder=\"0\"></iframe>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n            </main>\r\n        </div>\r\n        <app-footer-dashboard></app-footer-dashboard>\r\n    </div>\r\n</div>"
 
 /***/ }),
 
@@ -2923,6 +2844,105 @@ var UserDashboardComponent = /** @class */ (function () {
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_Site_services_users_service__WEBPACK_IMPORTED_MODULE_5__["UsersService"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"], _angular_common__WEBPACK_IMPORTED_MODULE_2__["Location"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"]])
     ], UserDashboardComponent);
     return UserDashboardComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/dashboard/user-dashboard/visualizar-evento/visualizar-evento.component.css":
+/*!********************************************************************************************!*\
+  !*** ./src/app/dashboard/user-dashboard/visualizar-evento/visualizar-evento.component.css ***!
+  \********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2Rhc2hib2FyZC91c2VyLWRhc2hib2FyZC92aXN1YWxpemFyLWV2ZW50by92aXN1YWxpemFyLWV2ZW50by5jb21wb25lbnQuY3NzIn0= */"
+
+/***/ }),
+
+/***/ "./src/app/dashboard/user-dashboard/visualizar-evento/visualizar-evento.component.html":
+/*!*********************************************************************************************!*\
+  !*** ./src/app/dashboard/user-dashboard/visualizar-evento/visualizar-evento.component.html ***!
+  \*********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"wrapper\">\n  <div class=\"sidebar\" data-color=\"danger\" data-background-color=\"white\" data-image=\"./assets/img/sidebar-1.jpg\">\n    <app-side-bar-dashboard></app-side-bar-dashboard>\n    <div class=\"sidebar-background\" style=\"background-image: url(./assets/img/sidebar-4.jpg)\"></div>\n  </div>\n  <div class=\"main-panel\">\n    <app-nav-bar-dashboard></app-nav-bar-dashboard>\n    <div class=\"main-content\">\n      <main role=\"main\">\n        <button value=\"Voltar\" onClick=\"history.go(-1)\" class=\"btn btn-primary bmd-btn-fab\">\n          <p id=\"tooltiptext\">Retornar</p>\n          <i class=\"material-icons\">\n            keyboard_backspace\n          </i>\n        </button>\n        <div class=\"container-fluid\">\n          <div class=\"row\">\n            <div class=\"col-md-12\">\n              <div class=\"card card-plain\">\n                <div class=\"card-header card-header-danger\">\n                  <h4 class=\"card-title mt-0\">{{evento.nomeEvento[0]}}</h4>\n                </div>\n                <div class=\"card-body\">\n                  <div class=\"table-responsive\">\n                    <table class=\"table table-hover\">\n                      <thead>\n                        <th>\n                          ID:Soft\n                        </th>\n                        <th>\n                          Nome do Soft\n                        </th>\n                        <th>\n                          ID:Evento\n                        </th>\n                      </thead>\n                      <tbody>\n                        <tr *ngFor=\"let eventos of eventos\">\n                          <td>\n                            {{eventos.id_soft}}\n                          </td>\n                          <td>\n                            {{eventos.nome_soft}}\n                          </td>\n                          <td>\n                            {{eventos.id_Evento}}\n                          </td>\n                        </tr>\n                      </tbody>\n                    </table>\n                  </div>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </main>\n    </div>\n    <app-footer-dashboard></app-footer-dashboard>\n  </div>\n</div>"
+
+/***/ }),
+
+/***/ "./src/app/dashboard/user-dashboard/visualizar-evento/visualizar-evento.component.ts":
+/*!*******************************************************************************************!*\
+  !*** ./src/app/dashboard/user-dashboard/visualizar-evento/visualizar-evento.component.ts ***!
+  \*******************************************************************************************/
+/*! exports provided: VisualizarEventoComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "VisualizarEventoComponent", function() { return VisualizarEventoComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var src_app_Site_services_eventos_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/Site/services/eventos.service */ "./src/app/Site/services/eventos.service.ts");
+/* harmony import */ var src_app_Site_services_users_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/Site/services/users.service */ "./src/app/Site/services/users.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+
+
+
+
+
+
+var VisualizarEventoComponent = /** @class */ (function () {
+    function VisualizarEventoComponent(formBuilder, eventoService, userService, router, activatedRoute) {
+        this.formBuilder = formBuilder;
+        this.eventoService = eventoService;
+        this.userService = userService;
+        this.router = router;
+        this.activatedRoute = activatedRoute;
+        this.evento = {
+            nomeEvento: []
+        };
+        this.eventos = [];
+        // evento: any
+        this.user = {};
+    }
+    VisualizarEventoComponent.prototype.ngOnInit = function () {
+        this.getEventosById();
+        console.log(this.eventos);
+        console.log(this.evento);
+        console.log(this.user);
+    };
+    VisualizarEventoComponent.prototype.getEventosById = function () {
+        var _this = this;
+        var params = this.activatedRoute.snapshot.params;
+        this.eventoService.getAllEventoAndMaquinaById(params.id).subscribe(function (res) {
+            var allEventoById = res['recordset'].map(function (res) { return res; });
+            var nome_evento = res['recordset'].map(function (res) { return res.nomeEvento; });
+            console.log(nome_evento);
+            allEventoById.forEach(function (res) {
+                _this.eventos.push(res);
+            });
+            // this.evento = nome_evento
+            nome_evento.forEach(function (res) {
+                _this.evento.nomeEvento.push(res);
+            });
+        });
+    };
+    VisualizarEventoComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+            selector: 'app-visualizar-evento',
+            template: __webpack_require__(/*! ./visualizar-evento.component.html */ "./src/app/dashboard/user-dashboard/visualizar-evento/visualizar-evento.component.html"),
+            styles: [__webpack_require__(/*! ./visualizar-evento.component.css */ "./src/app/dashboard/user-dashboard/visualizar-evento/visualizar-evento.component.css")]
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"],
+            src_app_Site_services_eventos_service__WEBPACK_IMPORTED_MODULE_3__["EventoService"],
+            src_app_Site_services_users_service__WEBPACK_IMPORTED_MODULE_4__["UsersService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_5__["ActivatedRoute"]])
+    ], VisualizarEventoComponent);
+    return VisualizarEventoComponent;
 }());
 
 
