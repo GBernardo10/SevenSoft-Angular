@@ -29,6 +29,7 @@ function modal(){
         // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
         // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
       })
+      
 }
 ;function rellax() {
     var rellax = new Rellax('.rellax', {
@@ -359,6 +360,48 @@ e,a,b);if("function"===typeof b.onComplete&&f.length===d.length)b.onComplete(f,e
 S:{pattern:/[a-zA-Z]/}};h.translation=f.extend({},h.translation,b.translation);h=f.extend(!0,{},h,b);p=c.getRegexMask();!1!==b.maxlength&&a.attr("maxlength",d.length);b.placeholder&&a.attr("placeholder",b.placeholder);a.attr("autocomplete","off");c.destroyEvents();c.events();var e=c.getCaret();c.val(c.getMasked());c.setCaret(e+c.getMCharsBeforeCount(e,!0))}()},y={},z=function(){var a=f(this),d={};a.attr("data-mask-reverse")&&(d.reverse=!0);"false"===a.attr("data-mask-maxlength")&&(d.maxlength=!1);
 a.attr("data-mask-clearifnotmatch")&&(d.clearIfNotMatch=!0);a.mask(a.attr("data-mask"),d)};f.fn.mask=function(a,d){var b=this.selector,h=function(){var b=f(this).data("mask"),h=JSON.stringify;if("object"!==typeof b||h(b.options)!==h(d)||b.mask!==a)return f(this).data("mask",new A(this,a,d))};this.each(h);b&&!y[b]&&(y[b]=!0,setTimeout(function(){f(document).on("DOMNodeInserted.mask",b,h)},500))};f.fn.unmask=function(){try{return this.each(function(){f(this).data("mask").remove().removeData("mask")})}catch(a){}};
 f.fn.cleanVal=function(){return this.data("mask").getCleanVal()};f("*[data-mask]").each(z);f(document).on("DOMNodeInserted.mask","*[data-mask]",z)});
+
+;$("modal-body").ready(function () {
+    $("#cpf").mask("000.000.000-00")
+    $("#hora").mask("00:00")
+    $("#cnpj").mask("00.000.000/0000-00")
+    $("#telefone").mask("(00) 0000-0000")
+    $("#salario").mask("999.999.990,00", { reverse: true })
+    $("#cep").mask("00.000-000")
+    $("#dataNascimento").mask("00/00/0000")
+
+    $("#rg").mask("999.999.999-W", {
+        translation: {
+            'W': {
+                pattern: /[X0-9]/
+            }
+        },
+        reverse: true
+    })
+
+    var options = {
+        translation: {
+            'A': { pattern: /[A-Z]/ },
+            'a': { pattern: /[a-zA-Z]/ },
+            'S': { pattern: /[a-zA-Z0-9]/ },
+            'L': { pattern: /[a-z]/ },
+        }
+    }
+
+    $("#placa").mask("AAA-0000", options)
+
+    $("#codigo").mask("AA.LLL.0000", options)
+
+    $("#celular").mask("(00) 0000-00009")
+
+    $("#celular").blur(function (event) {
+        if ($(this).val().length == 15) {
+            $("#celular").mask("(00) 00000-0009")
+        } else {
+            $("#celular").mask("(00) 0000-00009")
+        }
+    })
+})
 
 ;
 //# sourceMappingURL=scripts.js.map

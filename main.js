@@ -1002,7 +1002,7 @@ var EventoService = /** @class */ (function () {
     function EventoService(http, httpHandler) {
         this.http = http;
         this.httpHandler = httpHandler;
-        this.API_URI = 'https://servidorsevensoft.azurewebsites.net/api';
+        this.API_URI = 'http://localhost:3000/api';
     }
     EventoService.prototype.cadMaquina = function (formData) {
         console.log(formData);
@@ -1062,7 +1062,7 @@ var GraficoService = /** @class */ (function () {
     function GraficoService(http, httpHandler) {
         this.http = http;
         this.httpHandler = httpHandler;
-        this.API_URI = 'https://servidorsevensoft.azurewebsites.net/api';
+        this.API_URI = 'http://localhost:3000/api';
     }
     GraficoService.prototype.getAllDados = function (id) {
         return this.http.get(this.API_URI + "/grafico/" + id).map(function (result) { return result; });
@@ -1149,7 +1149,7 @@ var UsersService = /** @class */ (function () {
     function UsersService(http, router) {
         this.http = http;
         this.router = router;
-        this.API_URI = 'https://servidorsevensoft.azurewebsites.net/api';
+        this.API_URI = 'http://localhost:3000/api';
     }
     UsersService.prototype.log = function (msg) {
         console.log(new Date() + ": "
@@ -1201,6 +1201,12 @@ var UsersService = /** @class */ (function () {
             _this.log("Adicionado um novo usuario com o id=" + user.userId);
         }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.handleError('cadastro')));
     };
+    UsersService.prototype.deleteEvento = function (id) {
+        return this.http.delete(this.API_URI + "/evento/" + id);
+    };
+    UsersService.prototype.deleteMaquina = function (id) {
+        return this.http.delete(this.API_URI + "/maquina/" + id);
+    };
     // login(formData: NgForm): Observable<User> {
     //   return this.http.post<any>(`${this.API_URI}/login`, formData).pipe(
     //     tap((user: User) => {
@@ -1222,7 +1228,7 @@ var UsersService = /** @class */ (function () {
     UsersService.prototype.logout = function () {
         if (localStorage.getItem('currentUser')) {
             localStorage.removeItem('currentUser');
-            this.router.navigate(['/login']);
+            this.router.navigate(['/home']);
         }
     };
     UsersService.prototype.isloggedIn = function () {
@@ -1407,12 +1413,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _Site_login_login_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Site/login/login.component */ "./src/app/Site/login/login.component.ts");
-/* harmony import */ var _Site_services_guard_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Site/services/guard.service */ "./src/app/Site/services/guard.service.ts");
-/* harmony import */ var _dashboard_user_dashboard_user_dashboard_module__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./dashboard/user-dashboard/user-dashboard.module */ "./src/app/dashboard/user-dashboard/user-dashboard.module.ts");
-/* harmony import */ var _Site_error404_error404_module__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Site/error404/error404.module */ "./src/app/Site/error404/error404.module.ts");
-
-
-
 
 
 
@@ -1426,8 +1426,6 @@ var routes = [
         pathMatch: 'full'
     },
     { path: 'login', component: _Site_login_login_component__WEBPACK_IMPORTED_MODULE_5__["LoginComponent"] },
-    { path: 'dashboard/:id', loadChildren: function () { return _dashboard_user_dashboard_user_dashboard_module__WEBPACK_IMPORTED_MODULE_7__["UserDashboardModule"]; }, canActivate: [_Site_services_guard_service__WEBPACK_IMPORTED_MODULE_6__["GuardService"]] },
-    { path: '404', loadChildren: function () { return _Site_error404_error404_module__WEBPACK_IMPORTED_MODULE_8__["Error404Module"]; } },
 ];
 var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {
@@ -1467,7 +1465,7 @@ module.exports = ".carousel{\r\n    z-index: -1;\r\n    position: relative;\r\n 
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<router-outlet></router-outlet>"
+module.exports = "<!-- <app-side-bar></app-side-bar> -->\r\n<router-outlet></router-outlet>\r\n<!--\r\n<app-conteudo></app-conteudo>\r\n <div id=\"main\" class=\"conteiner\">\r\n  <div id=\"carouselExampleIndicators\" class=\"carousel slide\" data-ride=\"carousel\">\r\n    <ol class=\"carousel-indicators\">\r\n      <li data-target=\"#carouselExampleIndicators\" data-slide-to=\"0\" class=\"active\"></li>\r\n      <li data-target=\"#carouselExampleIndicators\" data-slide-to=\"1\"></li>\r\n      <li data-target=\"#carouselExampleIndicators\" data-slide-to=\"2\"></li>\r\n    </ol>\r\n    <div class=\"carousel-inner\">\r\n      <div class=\"carousel-item active\">\r\n        <img class=\"d-block w-100\" id=\"primeiroSlide\">\r\n      </div>\r\n      <div class=\"carousel-item\">\r\n        <img class=\"d-block w-100\" id=\"segundoSlide\">\r\n      </div>\r\n      <div class=\"carousel-item\">\r\n        <img class=\"d-block w-100\" id=\"terceiroSlide\">\r\n      </div>\r\n    </div>\r\n    <a class=\"carPrev carousel-control-prev\" id=\"botaoPrev\" href=\"#carouselExampleIndicators\" role=\"button\"\r\n      data-slide=\"prev\">\r\n      <span class=\"carPrevControl carousel-control-prev-icon\" aria-hidden=\"true\"></span>\r\n      <span class=\"sr-only\">Previous</span>\r\n    </a>\r\n    <a class=\"carNext carousel-control-next\" href=\"#carouselExampleIndicators\" role=\"button\" data-slide=\"next\">\r\n      <span class=\"carNextControl carousel-control-next-icon\" aria-hidden=\"true\"></span>\r\n      <span class=\"sr-only\">Next</span>\r\n    </a>\r\n  </div>\r\n</div> \r\n<div id=\"body\">\r\n  <header class=\"headder\">\r\n    <nav class=\"navigation\">\r\n      <section class=\"navigation_icon\">\r\n        <span class=\"topBar\"></span>\r\n        <span class=\"middleBar\"></span>\r\n        <span class=\"bottomBar\"></span>\r\n      </section>\r\n      <ul class=\"navigation_ul\">\r\n        <li><a routerLink=\"/\">Inicio</a></li>\r\n        <li><a routerLink=\"/teste\">Objetivo</a></li>\r\n        <li><a href=\"#servicos\">Serviços</a></li>\r\n        <li><a href=\"projeto\">Projeto</a></li>\r\n        <li><a href=\"contato\">Contato</a></li>\r\n        <li><a href=\"login\">Login</a></li>\r\n        <li><a href=\"cadastro\">Cadastro</a></li>\r\n      </ul>\r\n    </nav>\r\n  </header>\r\n  -->\r\n<!-- <app-navigation></app-navigation>\r\n<site-nav-bar></site-nav-bar> -->\r\n\r\n\r\n\r\n  <!--\r\n<router-outlet></router-outlet>\r\n\r\n<app-navigation class=\"carousel\"></app-navigation>\r\n\r\n<app-nav-bar></app-nav-bar>\r\n\r\n <app-parallax></app-parallax> \r\n\r\n<app-conteudo></app-conteudo>\r\n\r\n\r\n\r\n<div class=\"container p-4\">\r\n  <router-outlet></router-outlet>\r\n</div>\r\n\r\nThe content below is only a placeholder and can be replaced.\r\n<div style=\"text-align:center\">\r\n  <h1>\r\n    Welcome to {{ title }}!\r\n  </h1>\r\n  <img width=\"300\" alt=\"Angular Logo\" src=\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==\">\r\n</div>\r\n<h2>Here are some links to help you start: </h2>\r\n<ul>\r\n  <li>\r\n    <h2><a target=\"_blank\" rel=\"noopener\" href=\"https://angular.io/tutorial\">Tour of Heroes</a></h2>\r\n  </li>\r\n  <li>\r\n    <h2><a target=\"_blank\" rel=\"noopener\" href=\"https://angular.io/cli\">CLI Documentation</a></h2>\r\n  </li>\r\n  <li>\r\n    <h2><a target=\"_blank\" rel=\"noopener\" href=\"https://blog.angular.io/\">Angular blog</a></h2>\r\n  </li>\r\n</ul>-->"
 
 /***/ }),
 
@@ -1537,8 +1535,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Site_services_grafico_service__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./Site/services/grafico.service */ "./src/app/Site/services/grafico.service.ts");
 /* harmony import */ var _Site_services_users_service__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./Site/services/users.service */ "./src/app/Site/services/users.service.ts");
 /* harmony import */ var _Site_services_eventos_service__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./Site/services/eventos.service */ "./src/app/Site/services/eventos.service.ts");
-/* harmony import */ var ngx_mask__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ngx-mask */ "./node_modules/ngx-mask/fesm5/ngx-mask.js");
-
 
 
 
@@ -1591,12 +1587,12 @@ var AppModule = /** @class */ (function () {
                 _angular_common_http__WEBPACK_IMPORTED_MODULE_5__["HttpClientModule"],
                 _dashboard_user_dashboard_user_dashboard_module__WEBPACK_IMPORTED_MODULE_20__["UserDashboardModule"],
                 _Site_error404_error404_module__WEBPACK_IMPORTED_MODULE_13__["Error404Module"],
-                ngx_mask__WEBPACK_IMPORTED_MODULE_24__["NgxMaskModule"].forRoot(new Option)
             ],
             providers: [
                 _Site_services_users_service__WEBPACK_IMPORTED_MODULE_22__["UsersService"],
                 _Site_services_grafico_service__WEBPACK_IMPORTED_MODULE_21__["GraficoService"],
                 _Site_services_eventos_service__WEBPACK_IMPORTED_MODULE_23__["EventoService"]
+                // AuthGuard
             ],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_8__["AppComponent"]]
         })
@@ -1712,7 +1708,7 @@ module.exports = "/* Tooltip container */\r\n#tooltip {\r\n    position: relativ
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"wrapper\">\r\n  <div class=\"sidebar\" data-color=\"danger\" data-background-color=\"white\" data-image=\"./assets/img/sidebar-1.jpg\">\r\n    <app-side-bar-dashboard></app-side-bar-dashboard>\r\n    <div class=\"sidebar-background\" style=\"background-image: url(./assets/img/sidebar-4.jpg)\"></div>\r\n  </div>\r\n  <div class=\"main-panel\">\r\n    <app-nav-bar-dashboard></app-nav-bar-dashboard>\r\n\r\n    <div class=\"main-content\">\r\n      <div class=\"card text-center\">\r\n\r\n        <button data-toggle=\"modal\" data-target=\"#exampleModal\" data-whatever=\"@mdo\"\r\n          class=\"btn btn-primary bmd-btn-fab\">\r\n          <p id=\"tooltiptext\">Cadastrar Maquina</p>\r\n          <i class=\"material-icons\">add_circle_outline</i>\r\n        </button>\r\n\r\n        <button data-toggle=\"modal\" data-target=\"#exampleModalEvento\" data-whatever=\"@mdo\"\r\n          class=\"btn btn-primary bmd-btn-fab\">\r\n          <p id=\"tooltiptext\">Cadastrar Evento</p>\r\n          <i class=\"material-icons\">add_circle_outline</i>\r\n        </button>\r\n\r\n      </div>\r\n      <div class=\"row\">\r\n        <div class=\"col-md-4\" *ngFor=\"let eventos of eventos; let i = index\">\r\n          <div class=\"card text-center\">\r\n            <div class=\"card-header bg-dark text-white d-flex justify-content-between align-itens-center\">\r\n              <p>Evento:{{eventos.id_Evento}}</p>\r\n              <button class=\"btn btn-danger\">\r\n                <i class=\"far fa-trash-alt\"></i>\r\n              </button>\r\n            </div>\r\n            <div class=\"card-body\">\r\n              <h5 class=\"card-title\">{{eventos.nomeEvento}}</h5>\r\n              <h6 class=\"card-subtitle mb-2 text-muted\">{{eventos.data}}{{eventos.hora}}</h6>\r\n              <p class=\"card-text\">{{eventos.tipoEvento}}</p>\r\n              <!-- <p class=\"card-text\">{{i}}</p> -->\r\n              <div class=\"row\">\r\n                <div id=\"colEdit\" class=\"col-sm\">\r\n                  <div id=\"tooltip\">\r\n                    <a class=\"btn btn-info btn-block\">\r\n                      <p id=\"tooltiptext\">Editar Evento</p>\r\n                      <i class=\"material-icons\">\r\n                        edit\r\n                      </i>\r\n                    </a>\r\n                  </div>\r\n                </div>\r\n                <div id=\"colEdit\" class=\"col-sm\">\r\n                  <div id=\"tooltip\">\r\n\r\n                    <!-- <button data-toggle=\"modal\" data-target=\"#exampleModal\" data-whatever=\"@mdo\" \r\n                    routerLink=\"/evento/{{user.id_usuario}}/cadastro-maquina\" type=\"button\"\r\n                      class=\"btn btn-primary bmd-btn-fab\">\r\n                      <p id=\"tooltiptext\">Inserir maquina</p>\r\n                      <i class=\"material-icons\">add_circle_outline</i>\r\n                    </button> -->\r\n                  </div>\r\n                </div>\r\n                <div id=\"colEdit\" class=\"col-sm\">\r\n                  <div id=\"tooltip\">\r\n                    <button [routerLink]=\"['visualizar-evento/', eventos.id_Evento ]\" type=\"button\"\r\n                      class=\"btn btn-primary bmd-btn-fab\">\r\n                      <p id=\"tooltiptext\">Visualizar </p>\r\n                      <i class=\"material-icons\">search</i>\r\n                    </button>\r\n                  </div>\r\n                </div>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n        <!--Cadastrar Maquina-->\r\n\r\n        <div class=\"modal fade\" id=\"exampleModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\"\r\n          aria-hidden=\"true\">\r\n          <div class=\"modal-dialog\" role=\"document\">\r\n            <div class=\"modal-content\">\r\n              <div class=\"modal-header\">\r\n                <h5 class=\"modal-title\" id=\"exampleModalLabel\">Nova Maquina</h5>\r\n                <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\r\n                  <span aria-hidden=\"true\">&times;</span>\r\n                </button>\r\n              </div>\r\n              <div class=\"modal-body\">\r\n                <form [formGroup]=\"maquinaForm\" (ngSubmit)=\"cadMaq(maquinaForm.value)\">\r\n                  <div class=\"form-group\">\r\n                    <label for=\"recipient-name\" class=\"col-form-label\">ID:</label>\r\n                    <input type=\"text\" formControlName=\"fk_idusuario\" class=\"form-control\" id=\"recipient-name\">\r\n                  </div>\r\n                  <div class=\"form-group\">\r\n                    <label class=\"col-md-4\" for=\"exampleFormControlSelect1\">Selecionar\r\n                      Evento\r\n                    </label>\r\n                    <select *ngFor=\"let eventos of eventos\" class=\"form-control\" formControlName=\"fk_idEvento\"\r\n                      id=\"exampleFormControlSelect1\">\r\n                      <option></option>\r\n                      <option>{{eventos.id_Evento}}</option>\r\n                    </select>\r\n                  </div>\r\n                  <div class=\"form-group\">\r\n                    <label for=\"message-text\" class=\"col-form-label\">Nome da maquina:</label>\r\n                    <input type=\"text\" formControlName=\"nome_soft\" class=\"form-control\" id=\"recipient-name\">\r\n                  </div>\r\n                  <button type=\"submit\" [disabled]=\"!maquinaForm.valid\"\r\n                    class=\"btn btn-primary btn-link btn-wd btn-lg\">Cadastrar</button>\r\n                </form>\r\n              </div>\r\n              <!-- <div class=\"modal-footer\">\r\n              <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>\r\n              <button type=\"button\" class=\"btn btn-primary\">Send message</button>\r\n            </div> -->\r\n            </div>\r\n          </div>\r\n        </div>\r\n        <!---->\r\n\r\n\r\n        <!--Cadastrar Evento-->\r\n        <div class=\"modal fade\" id=\"exampleModalEvento\" tabindex=\"-1\" role=\"dialog\"\r\n          aria-labelledby=\"exampleModalLabelEvento\" aria-hidden=\"true\">\r\n          <div class=\"modal-dialog\" role=\"document\">\r\n            <div class=\"modal-content\">\r\n              <div class=\"modal-header\">\r\n                <h5 class=\"modal-title\" id=\"exampleModalLabelEvento\">Novo Evento</h5>\r\n                <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\r\n                  <span aria-hidden=\"true\">&times;</span>\r\n                </button>\r\n              </div>\r\n              <div class=\"modal-body\">\r\n                <form [formGroup]=\"eventoForm\" (ngSubmit)=\"cadEvento(eventoForm.value)\">\r\n                  <div class=\"form-group\">\r\n                    <label for=\"recipient-name\" class=\"col-form-label\">ID:</label>\r\n                    <input type=\"text\" formControlName=\"fk_idUserSeven\" class=\"form-control\">\r\n                  </div>\r\n                  <div class=\"form-group\">\r\n                    <label for=\"recipient-name\" class=\"col-form-label\">Nome do Evento:</label>\r\n                    <input type=\"text\" formControlName=\"nomeEvento\" class=\"form-control\">\r\n                  </div>\r\n                  <div class=\"form-group\">\r\n                    <label for=\"recipient-name\" class=\"col-form-label\">Tipo de Evento:</label>\r\n                    <input type=\"text\" formControlName=\"tipoEvento\" class=\"form-control\">\r\n                  </div>\r\n                  <div class=\"form-group\">\r\n                    <label for=\"recipient-name\" class=\"col-form-label\">Data:</label>\r\n                    <input type=\"text\" class=\"form-control\" id=\"dataNascimento\" formControlName=\"data\">\r\n                  </div>\r\n                  <div class=\"form-group\">\r\n                    <label for=\"recipient-name\" class=\"col-form-label\">Hora:</label>\r\n                    <input type=\"text\" id=\"hora\" formControlName=\"hora\" class=\"form-control\">\r\n                  </div>\r\n                  <button type=\"submit\" [disabled]=\"!eventoForm.valid\"\r\n                    class=\"btn btn-primary btn-link btn-wd btn-lg\">Cadastrar</button>\r\n                </form>\r\n              </div>\r\n              <!-- <div class=\"modal-footer\">\r\n              <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>\r\n              <button type=\"button\" class=\"btn btn-primary\">Send message</button>\r\n            </div> -->\r\n            </div>\r\n          </div>\r\n        </div>\r\n\r\n\r\n\r\n\r\n\r\n        <!-- <router-outlet></router-outlet> -->\r\n      </div>\r\n    </div>\r\n    <app-footer-dashboard></app-footer-dashboard>\r\n\r\n  </div>"
+module.exports = "<div class=\"wrapper\">\r\n  <div class=\"sidebar\" data-color=\"danger\" data-background-color=\"white\" data-image=\"./assets/img/sidebar-1.jpg\">\r\n    <app-side-bar-dashboard></app-side-bar-dashboard>\r\n    <div class=\"sidebar-background\" style=\"background-image: url(./assets/img/sidebar-4.jpg)\"></div>\r\n  </div>\r\n  <div class=\"main-panel\">\r\n    <app-nav-bar-dashboard></app-nav-bar-dashboard>\r\n\r\n    <div class=\"main-content\">\r\n      <div class=\"text-center\">\r\n\r\n        <button style=\"width: 100%\" data-toggle=\"modal\" data-target=\"#exampleModal\" data-whatever=\"@mdo\"\r\n          class=\"btn btn-primary bmd-btn-fab\">\r\n          <p id=\"tooltiptext\">Cadastrar Maquina</p>\r\n          <i class=\"material-icons\">add_circle_outline</i>\r\n        </button>\r\n\r\n        <button style=\"width: 100%\" data-toggle=\"modal\" data-target=\"#exampleModalEvento\" data-whatever=\"@mdo\"\r\n          class=\"btn btn-primary bmd-btn-fab\">\r\n          <p id=\"tooltiptext\">Cadastrar Evento</p>\r\n          <i class=\"material-icons\">add_circle_outline</i>\r\n        </button>\r\n\r\n      </div>\r\n      <div class=\"row\">\r\n        <div class=\"col-md-4\" *ngFor=\"let eventos of eventos; let i = index\">\r\n          <div class=\"card text-center\">\r\n            <div class=\"card-header bg-dark text-white d-flex justify-content-between align-itens-center\">\r\n              <p>Evento:{{eventos.id_Evento}}</p>\r\n              <button class=\"btn btn-danger\" (click)=\"deletarEvento(eventos.id_Evento)\">\r\n                <i class=\"far fa-trash-alt\"></i>\r\n              </button>\r\n            </div>\r\n            <div class=\"card-body\">\r\n              <h5 class=\"card-title\">{{eventos.nomeEvento}}</h5>\r\n              <h6 class=\"card-subtitle mb-2 text-muted\">{{eventos.data}}{{eventos.hora}}</h6>\r\n              <p class=\"card-text\">{{eventos.tipoEvento}}</p>\r\n              <!-- <p class=\"card-text\">{{i}}</p> -->\r\n              <div class=\"row\">\r\n                <div id=\"colEdit\" class=\"col-sm\">\r\n                  <div id=\"tooltip\">\r\n                    <a class=\"btn btn-info btn-block\">\r\n                      <p id=\"tooltiptext\">Editar Evento</p>\r\n                      <i class=\"material-icons\">\r\n                        edit\r\n                      </i>\r\n                    </a>\r\n                  </div>\r\n                </div>\r\n                <div id=\"colEdit\" class=\"col-sm\">\r\n                  <div id=\"tooltip\">\r\n\r\n                    <!-- <button data-toggle=\"modal\" data-target=\"#exampleModal\" data-whatever=\"@mdo\" \r\n                    routerLink=\"/evento/{{user.id_usuario}}/cadastro-maquina\" type=\"button\"\r\n                      class=\"btn btn-primary bmd-btn-fab\">\r\n                      <p id=\"tooltiptext\">Inserir maquina</p>\r\n                      <i class=\"material-icons\">add_circle_outline</i>\r\n                    </button> -->\r\n                  </div>\r\n                </div>\r\n                <div id=\"colEdit\" class=\"col-sm\">\r\n                  <div id=\"tooltip\">\r\n                    <button [routerLink]=\"['visualizar-evento/', eventos.id_Evento ]\" type=\"button\"\r\n                      class=\"btn btn-primary bmd-btn-fab\">\r\n                      <p id=\"tooltiptext\">Visualizar </p>\r\n                      <i class=\"material-icons\">search</i>\r\n                    </button>\r\n                  </div>\r\n                </div>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n        <!--Cadastrar Maquina-->\r\n\r\n        <div class=\"modal fade\" id=\"exampleModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\"\r\n          aria-hidden=\"true\">\r\n          <div class=\"modal-dialog\" role=\"document\">\r\n            <div class=\"modal-content\">\r\n              <div class=\"modal-header\">\r\n                <h5 class=\"modal-title\" id=\"exampleModalLabel\">Nova Maquina</h5>\r\n                <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\r\n                  <span aria-hidden=\"true\">&times;</span>\r\n                </button>\r\n              </div>\r\n              <div class=\"modal-body\">\r\n                <form [formGroup]=\"maquinaForm\" (ngSubmit)=\"cadMaq(maquinaForm.value)\">\r\n                  <div class=\"form-group\">\r\n                    <label for=\"recipient-name\" class=\"col-form-label\">ID:</label>\r\n                    <input type=\"text\" formControlName=\"fk_idusuario\" class=\"form-control\" id=\"recipient-name\">\r\n                  </div>\r\n                  <div class=\"form-group\">\r\n                    <label class=\"col-md-4\" for=\"exampleFormControlSelect1\">Selecionar\r\n                      Evento\r\n                    </label>\r\n                    <select *ngFor=\"let eventos of eventos\" class=\"form-control\" formControlName=\"fk_idEvento\"\r\n                      id=\"exampleFormControlSelect1\">\r\n                      <option></option>\r\n                      <option>{{eventos.id_Evento}}</option>\r\n                    </select>\r\n                  </div>\r\n                  <div class=\"form-group\">\r\n                    <label for=\"message-text\" class=\"col-form-label\">Nome da maquina:</label>\r\n                    <input type=\"text\" formControlName=\"nome_soft\" class=\"form-control\" id=\"recipient-name\">\r\n                  </div>\r\n                  <button type=\"submit\" [disabled]=\"!maquinaForm.valid\"\r\n                    class=\"btn btn-primary btn-link btn-wd btn-lg\">Cadastrar</button>\r\n                </form>\r\n              </div>\r\n              <!-- <div class=\"modal-footer\">\r\n              <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>\r\n              <button type=\"button\" class=\"btn btn-primary\">Send message</button>\r\n            </div> -->\r\n            </div>\r\n          </div>\r\n        </div>\r\n        <!---->\r\n\r\n\r\n        <!--Cadastrar Evento-->\r\n        <div class=\"modal fade\" id=\"exampleModalEvento\" tabindex=\"-1\" role=\"dialog\"\r\n          aria-labelledby=\"exampleModalLabelEvento\" aria-hidden=\"true\">\r\n          <div class=\"modal-dialog\" role=\"document\">\r\n            <div class=\"modal-content\">\r\n              <div class=\"modal-header\">\r\n                <h5 class=\"modal-title\" id=\"exampleModalLabelEvento\">Novo Evento</h5>\r\n                <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\r\n                  <span aria-hidden=\"true\">&times;</span>\r\n                </button>\r\n              </div>\r\n              <div class=\"modal-body\">\r\n                <form [formGroup]=\"eventoForm\" (ngSubmit)=\"cadEvento(eventoForm.value)\">\r\n                  <div class=\"form-group\">\r\n                    <label for=\"recipient-name\" class=\"col-form-label\">ID:</label>\r\n                    <input type=\"text\" formControlName=\"fk_idUserSeven\" class=\"form-control\">\r\n                  </div>\r\n                  <div class=\"form-group\">\r\n                    <label for=\"recipient-name\" class=\"col-form-label\">Nome do Evento:</label>\r\n                    <input type=\"text\" formControlName=\"nomeEvento\" class=\"form-control\">\r\n                  </div>\r\n                  <div class=\"form-group\">\r\n                    <label for=\"recipient-name\" class=\"col-form-label\">Tipo de Evento:</label>\r\n                    <input type=\"text\" formControlName=\"tipoEvento\" class=\"form-control\">\r\n                  </div>\r\n                  <div class=\"form-group\">\r\n                    <label for=\"recipient-name\" class=\"col-form-label\">Data:</label>\r\n                    <input type=\"text\" class=\"form-control\" formControlName=\"data\">\r\n                  </div>\r\n                  <div class=\"form-group\">\r\n                    <label for=\"recipient-name\" class=\"col-form-label\">Hora:</label>\r\n                    <input type=\"text\" formControlName=\"hora\" class=\"form-control\">\r\n                  </div>\r\n                  <button type=\"submit\" [disabled]=\"!eventoForm.valid\"\r\n                    class=\"btn btn-primary btn-link btn-wd btn-lg\">Cadastrar</button>\r\n                </form>\r\n              </div>\r\n              <!-- <div class=\"modal-footer\">\r\n              <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>\r\n              <button type=\"button\" class=\"btn btn-primary\">Send message</button>\r\n            </div> -->\r\n            </div>\r\n          </div>\r\n        </div>\r\n\r\n\r\n\r\n\r\n\r\n        <!-- <router-outlet></router-outlet> -->\r\n      </div>\r\n    </div>\r\n    <app-footer-dashboard></app-footer-dashboard>\r\n\r\n  </div>"
 
 /***/ }),
 
@@ -1790,11 +1786,12 @@ var EventoDashboardComponent = /** @class */ (function () {
             'fk_idEvento': [null, _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
             'nome_soft': [null, _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
         });
+        var date = new Date();
         this.eventoForm = this.formBuilder.group({
             'nomeEvento': [null, _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
             'tipoEvento': [null, _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
-            'data': [null, _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
-            'hora': [null, _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
+            'data': [date.toLocaleDateString(), _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
+            'hora': [date.toLocaleTimeString(), _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required],
             'fk_idUserSeven': [params.id, _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required]
         });
     };
@@ -1893,9 +1890,22 @@ var EventoDashboardComponent = /** @class */ (function () {
             if (maquina) {
                 console.log(maquina);
                 _this.eventoService.cadMaquina(maquina);
+                if (true) {
+                    confirm("Maquina cadastrada com sucesso !");
+                    _this.router.navigate(['/evento', _this.user.id_usuario]);
+                }
+                // this.router.navigate(['/evento/420']);
+                // "['visualizar-evento/', eventos.id_Evento ]"
             }
         }, function (err) { return console.error(err); });
     };
+    // cadMaq(formData:NgForm){
+    //   return this.eventoService.cadMaquina(formData).subscribe(
+    //     res =>{
+    //       this.router.navigate(['/evento']);
+    //     }
+    //   )
+    // }
     EventoDashboardComponent.prototype.cadEvento = function (formData) {
         var _this = this;
         console.log(formData);
@@ -1903,9 +1913,24 @@ var EventoDashboardComponent = /** @class */ (function () {
             if (evento) {
                 console.log(evento);
                 _this.eventoService.cadEvento(evento);
+                if (true) {
+                    confirm("Evento cadastrado com sucesso !");
+                    _this.router.navigate(['/dashboard', _this.user.id_usuario]);
+                }
                 console.log(formData);
             }
         }, function (err) { return console.error(err); });
+    };
+    EventoDashboardComponent.prototype.deletarEvento = function (id_Evento) {
+        var _this = this;
+        this.userService.deleteEvento(id_Evento).subscribe(function (res) {
+            console.log(res);
+            if (true) {
+                confirm("Evento deletado com sucesso !");
+                _this.router.navigate(['/dashboard', _this.user.id_usuario]);
+            }
+            //this.getEventosById();
+        }, function (err) { return console.log(err); });
     };
     EventoDashboardComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -2242,7 +2267,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- <div class=\"container\">\r\n  <div class=\"col-md-6 col-md-offset-3 loginBox\">\r\n    Welcome, {{id}}\r\n    <a href=\"javascript:void(0);\" (click)=\"logout()\">Logout</a>\r\n  </div>\r\n</div> -->\r\n<div class=\"wrapper\">\r\n    <div class=\"sidebar\" data-color=\"danger\" data-background-color=\"white\" data-image=\"./assets/img/sidebar-1.jpg\">\r\n        <app-side-bar-dashboard></app-side-bar-dashboard>\r\n        <div class=\"sidebar-background\" style=\"background-image: url(./assets/img/sidebar-4.jpg)\"></div>\r\n    </div>\r\n    <div class=\"main-panel\">\r\n        <app-nav-bar-dashboard></app-nav-bar-dashboard>\r\n        <div class=\"main-content\">\r\n            <div class=\"container-fluid\">\r\n                <div class=\"row\">\r\n\r\n                    <div class=\"col-lg-3 col-md-6 col-sm-6\" *ngFor=\"let hardware of hardware\">\r\n                        <div class=\"card card-stats\">\r\n                            <div class=\"card-header card-header-warning card-header-icon\">\r\n                                <div class=\"card-icon\">\r\n                                    <small>{{hardware.nome_soft}}</small><i class=\"material-icons\">content_copy</i>\r\n                                </div>\r\n                                <br><br><br>\r\n                                <p class=\"card-category\">{{hardware.id_Hardware}}</p>\r\n                                <h3 class=\"card-title\">\r\n                                    <small>Fabricante: {{hardware.fabricante}}</small>\r\n                                </h3>\r\n                            </div>\r\n                            <div class=\"card-footer\">\r\n                                <div class=\"stats\">\r\n                                    <i class=\"material-icons\">cached</i>\r\n                                    <small class=\"card-title\">{{hardware.nome_processador}}</small>\r\n                                    <small class=\"card-title\">{{hardware.modelo_processador}}</small>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n\r\n                    <div class=\"col-lg-3 col-md-6 col-sm-6\" *ngFor=\"let chamados of chamados\">\r\n                        <div class=\"card card-stats\">\r\n                            <div class=\"card-header card-header-danger card-header-icon\">\r\n                                <div class=\"card-icon\">\r\n                                    <i class=\"material-icons\">info_outline</i>\r\n                                </div>\r\n                                <p class=\"card-category\">Chamados Abertos</p>\r\n                                <h3 class=\"card-title\">{{chamados.total_de_chamado}}</h3>\r\n                            </div>\r\n                            <!-- <div class=\"card-footer\">\r\n                                <div class=\"stats\">\r\n                                    <i class=\"material-icons\">cached</i>\r\n                                    <a href=\"\">Atualizar</a>\r\n                                </div>\r\n                            </div> -->\r\n                        </div>\r\n                    </div>\r\n\r\n                    <!-- <div class=\"col-lg-3 col-md-6 col-sm-6\">\r\n                        <div class=\"card card-stats\">\r\n                            <div class=\"card-header card-header-info card-header-icon\">\r\n                                <div class=\"card-icon\">\r\n                                    <i class=\"material-icons\">#</i>\r\n                                </div>\r\n                                <p class=\"card-category\">??</p>\r\n                                <h3 class=\"card-title\">??</h3>\r\n                            </div>\r\n                            <div class=\"card-footer\">\r\n                                <div class=\"stats\">\r\n                                    <i class=\"material-icons\">cached</i>\r\n                                    <a href=\"\">Atualizar</a>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                    </div> -->\r\n                </div>\r\n\r\n                <div class=\"row\">\r\n                    <div class=\"col-md-4\">\r\n                        <div class=\"card card-chart\">\r\n                            <div class=\"container\">\r\n                                <!-- <div class=\"card-header card-header-success\"> -->\r\n                                <div *ngIf=\"chartTemperaturaCPU\">\r\n                                    <canvas id=\"canvas\">\r\n                                        {{chartTemperaturaCPU}}\r\n                                    </canvas>\r\n                                </div>\r\n                                <!-- </div> -->\r\n                            </div>\r\n                            <!-- <div class=\"card-header card-header-success\">\r\n                                    \r\n                                </div> -->\r\n                            <!-- <div class=\"card-body\">\r\n                                <h4 class=\"card-title\">??</h4>\r\n                                <p class=\"card-category\">\r\n                                    <span class=\"text-success\"><i class=\"fa fa-long-arrow-up\"></i> ?? </span> ??</p>\r\n                            </div>\r\n                            <div class=\"card-footer\">\r\n                                <div class=\"stats\">\r\n                                    <i class=\"material-icons\">access_time</i> updated 4 minutes ago\r\n                                </div>\r\n                            </div> -->\r\n                        </div>\r\n                    </div>\r\n\r\n                    <div class=\"col-md-4\">\r\n                        <div class=\"card card-chart\">\r\n                            <div class=\"container\">\r\n                                <!-- <div class=\"card-header card-header-danger\"> -->\r\n                                <div *ngIf=\"chartCPU\">\r\n                                    <canvas id=\"cpu\">\r\n                                        {{chartCPU}}\r\n                                    </canvas>\r\n                                </div>\r\n                                <!-- </div> -->\r\n                            </div>\r\n                            <!-- <div class=\"card-header card-header-warning\">\r\n                                    <div class=\"ct-chart\">\r\n                                    </div>\r\n                                </div> -->\r\n                            <!-- <div class=\"card-body\">\r\n                                <h4 class=\"card-title\">??</h4>\r\n                                <p class=\"card-category\">??</p>\r\n                            </div>\r\n                            <div class=\"card-footer\">\r\n                                <div class=\"stats\">\r\n                                    <i class=\"material-icons\">access_time</i> updated 4 minutes ago\r\n                                </div>\r\n                            </div> -->\r\n                        </div>\r\n                    </div>\r\n\r\n                    <div class=\"col-md-4\">\r\n                        <div class=\"card card-chart\">\r\n                            <div class=\"container\">\r\n                                <div *ngIf=\"chartMemoriaRam\">\r\n                                    <canvas id=\"memoriaRam\">\r\n                                        {{chartMemoriaRam}}\r\n                                    </canvas>\r\n                                </div>\r\n                            </div>\r\n                            <!-- <div class=\"card-body\">\r\n                                <h4 class=\"card-title\">??</h4>\r\n                                <p class=\"card-category\">??</p>\r\n                            </div>\r\n                            <div class=\"card-footer\">\r\n                                <div class=\"stats\">\r\n                                    <i class=\"material-icons\">access_time</i> updated 4 minutes ago\r\n                                </div>\r\n                            </div> -->\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"container-fluid\">\r\n                        <div class=\"row\">\r\n                            <div class=\"col-md-12\">\r\n                                <div class=\"card card-plain\">\r\n                                    <div class=\"card-header card-header-danger\">\r\n                                        <h4 class=\"card-title mt-0\"> Processos Ativos</h4>\r\n                                    </div>\r\n                                    <div class=\"card-body\">\r\n                                        <div class=\"table-responsive\">\r\n                                            <table class=\"table table-hover\">\r\n                                                <thead>\r\n                                                    <th>\r\n                                                        ID:Processo\r\n                                                    </th>\r\n                                                    <th>\r\n                                                        Nome do Processo\r\n                                                    </th>\r\n                                                    <th>\r\n                                                        PID\r\n                                                    </th>\r\n                                                    <th>\r\n                                                        Memoria\r\n                                                    </th>\r\n                                                </thead>\r\n                                                <tbody>\r\n                                                    <tr *ngFor=\"let processo of processo\">\r\n                                                        <td>\r\n                                                            {{processo.id_processo}}\r\n                                                        </td>\r\n                                                        <td>\r\n                                                            {{processo.nome_processo}}\r\n                                                        </td>\r\n                                                        <td>\r\n                                                            {{processo.pid}}\r\n                                                        </td>\r\n                                                        <td>\r\n                                                            {{processo.memoria}}\r\n                                                        </td>\r\n                                                    </tr>\r\n                                                </tbody>\r\n                                            </table>\r\n                                        </div>\r\n                                    </div>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n\r\n                <app-footer-dashboard></app-footer-dashboard>\r\n            </div>\r\n        </div>\r\n    </div>"
+module.exports = "<!-- <div class=\"container\">\r\n  <div class=\"col-md-6 col-md-offset-3 loginBox\">\r\n    Welcome, {{id}}\r\n    <a href=\"javascript:void(0);\" (click)=\"logout()\">Logout</a>\r\n  </div>\r\n</div> -->\r\n<div class=\"wrapper\">\r\n    <div class=\"sidebar\" data-color=\"danger\" data-background-color=\"white\" data-image=\"./assets/img/sidebar-1.jpg\">\r\n        <app-side-bar-dashboard></app-side-bar-dashboard>\r\n        <div class=\"sidebar-background\" style=\"background-image: url(./assets/img/sidebar-4.jpg)\"></div>\r\n    </div>\r\n    <div class=\"main-panel\">\r\n        <app-nav-bar-dashboard></app-nav-bar-dashboard>\r\n        <div class=\"main-content\">\r\n            <div class=\"container-fluid\">\r\n                <div class=\"row\">\r\n\r\n                    <div class=\"col-lg-3 col-md-6 col-sm-6\" *ngFor=\"let hardware of hardware\">\r\n                        <div class=\"card card-stats\">\r\n                            <div class=\"card-header card-header-warning card-header-icon\">\r\n                                <div class=\"card-icon\">\r\n                                    <small>{{hardware.nome_soft}}</small><i class=\"material-icons\">content_copy</i>\r\n                                </div>\r\n                                <br><br><br>\r\n                                <p class=\"card-category\">{{hardware.id_Hardware}}</p>\r\n                                <h3 class=\"card-title\">\r\n                                    <small>Fabricante: {{hardware.fabricante}}</small>\r\n                                </h3>\r\n                            </div>\r\n                            <div class=\"card-footer\">\r\n                                <div class=\"stats\">\r\n                                    <i class=\"material-icons\">cached</i>\r\n                                    <small class=\"card-title\">{{hardware.nome_processador}}</small>\r\n                                    <small class=\"card-title\">{{hardware.modelo_processador}}</small>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n\r\n                    <div class=\"col-lg-3 col-md-6 col-sm-6\" *ngFor=\"let chamados of chamados\">\r\n                        <div class=\"card card-stats\">\r\n                            <div class=\"card-header card-header-danger card-header-icon\">\r\n                                <div class=\"card-icon\">\r\n                                    <i class=\"material-icons\">info_outline</i>\r\n                                </div>\r\n                                <p class=\"card-category\">Chamados Abertos</p>\r\n                                <h3 class=\"card-title\">{{chamados.total_de_chamado}}</h3>\r\n                            </div>\r\n                            <!-- <div class=\"card-footer\">\r\n                                <div class=\"stats\">\r\n                                    <i class=\"material-icons\">cached</i>\r\n                                    <a href=\"\">Atualizar</a>\r\n                                </div>\r\n                            </div> -->\r\n                        </div>\r\n                    </div>\r\n\r\n                    <!-- <div class=\"col-lg-3 col-md-6 col-sm-6\">\r\n                        <div class=\"card card-stats\">\r\n                            <div class=\"card-header card-header-info card-header-icon\">\r\n                                <div class=\"card-icon\">\r\n                                    <i class=\"material-icons\">#</i>\r\n                                </div>\r\n                                <p class=\"card-category\">??</p>\r\n                                <h3 class=\"card-title\">??</h3>\r\n                            </div>\r\n                            <div class=\"card-footer\">\r\n                                <div class=\"stats\">\r\n                                    <i class=\"material-icons\">cached</i>\r\n                                    <a href=\"\">Atualizar</a>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                    </div> -->\r\n                </div>\r\n\r\n                <div class=\"row\">\r\n                    <div class=\"col-md-4\">\r\n                        <div class=\"card card-chart\">\r\n                            <div class=\"container\">\r\n                                <!-- <div class=\"card-header card-header-success\"> -->\r\n                                <div *ngIf=\"chartTemperaturaCPU\">\r\n                                    <br>\r\n                                    <canvas id=\"canvas\">\r\n                                        {{chartTemperaturaCPU}}\r\n                                    </canvas>\r\n                                </div>\r\n                                <!-- </div> -->\r\n                            </div>\r\n                            <!-- <div class=\"card-header card-header-success\">\r\n                                    \r\n                                </div> -->\r\n                            <div class=\"card-body\">\r\n                                <h4 class=\"card-title\">Temperatura da CPU</h4>\r\n                                <p class=\"card-category\">\r\n                                    <span class=\"text-success\"><i class=\"fas fa-temperature-low\"></i></span>\r\n                                    {{labelTemMax[labelTemMax.length -1]}}</p>\r\n                            </div>\r\n                            <div class=\"card-footer\">\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n\r\n                    <div class=\"col-md-4\">\r\n                        <div class=\"card card-chart\">\r\n                            <div class=\"container\">\r\n                                <!-- <div class=\"card-header card-header-danger\"> -->\r\n                                <div *ngIf=\"chartCPU\">\r\n                                    <br>\r\n                                    <canvas id=\"cpu\">\r\n                                        {{chartCPU}}\r\n                                    </canvas>\r\n                                </div>\r\n                                <!-- </div> -->\r\n                            </div>\r\n                            <!-- <div class=\"card-header card-header-warning\">\r\n                                    <div class=\"ct-chart\">\r\n                                    </div>\r\n                                </div> -->\r\n                            <div class=\"card-body\">\r\n                                <h4 class=\"card-title\">Uso da CPU</h4>\r\n                                <p class=\"card-category\">CPU em uso: {{labelCPU_Uso[labelCPU_Uso.length -1]}}%</p>\r\n                                <p class=\"card-category\">CPU\r\n                                    Disponivel: {{labelCPU_Disponivel[labelCPU_Disponivel.length -1]}}%</p>\r\n\r\n                            </div>\r\n                            <div class=\"card-footer\">\r\n                                <div class=\"stats\">\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"col-md-4\">\r\n                        <div class=\"card card-chart\">\r\n                            <div class=\"container\">\r\n                                <div *ngIf=\"chartMemoriaRam\">\r\n                                    <br>\r\n                                    <canvas id=\"memoriaRam\">\r\n                                        {{chartMemoriaRam}}\r\n                                    </canvas>\r\n                                </div>\r\n                            </div>\r\n                            <div class=\"card-body\">\r\n                                <h4 class=\"card-title\">Uso da Memoria RAM</h4>\r\n                                <p class=\"card-category\">Memoria Ram em uso: {{labelRAM_Uso[labelRAM_Uso.length -1]}}%\r\n                                </p>\r\n                                <p class=\"card-category\">Memoria Ram\r\n                                    Disponivel: {{labelRAm_Disponivel[labelRAm_Disponivel.length -1]}}%</p>\r\n                            </div>\r\n                            <div class=\"card-footer\">\r\n                                <div class=\"stats\">\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                    <div class=\"container-fluid\">\r\n                        <div class=\"row\">\r\n                            <div class=\"col-md-12\">\r\n                                <div class=\"card card-plain\">\r\n                                    <div class=\"card-header card-header-danger\">\r\n                                        <h4 class=\"card-title mt-0\"> Processos Ativos</h4>\r\n                                    </div>\r\n                                    <div class=\"card-body\">\r\n                                        <div class=\"table-responsive\">\r\n                                            <table class=\"table table-hover\">\r\n                                                <thead>\r\n                                                    <th>\r\n                                                        ID:Processo\r\n                                                    </th>\r\n                                                    <th>\r\n                                                        Nome do Processo\r\n                                                    </th>\r\n                                                    <th>\r\n                                                        PID\r\n                                                    </th>\r\n                                                    <th>\r\n                                                        Memoria\r\n                                                    </th>\r\n                                                </thead>\r\n                                                <tbody>\r\n                                                    <tr *ngFor=\"let processo of processo\">\r\n                                                        <td>\r\n                                                            {{processo.id_processo}}\r\n                                                        </td>\r\n                                                        <td>\r\n                                                            {{processo.nome_processo}}\r\n                                                        </td>\r\n                                                        <td>\r\n                                                            {{processo.pid}}\r\n                                                        </td>\r\n                                                        <td>\r\n                                                            {{processo.memoria}}\r\n                                                        </td>\r\n                                                    </tr>\r\n                                                </tbody>\r\n                                            </table>\r\n                                        </div>\r\n                                    </div>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n\r\n                <app-footer-dashboard></app-footer-dashboard>\r\n            </div>\r\n        </div>\r\n    </div>"
 
 /***/ }),
 
@@ -2281,6 +2306,11 @@ var PerfilDashboardComponent = /** @class */ (function () {
         this.chartTemperaturaCPU = [];
         this.chartMemoriaRam = [];
         this.chartCPU = [];
+        this.labelTemMax = [];
+        this.labelCPU_Uso = [];
+        this.labelCPU_Disponivel = [];
+        this.labelRAM_Uso = [];
+        this.labelRAm_Disponivel = [];
         this.user = [];
         this.hardware = [];
         this.processo = [];
@@ -2295,6 +2325,7 @@ var PerfilDashboardComponent = /** @class */ (function () {
         this.chartCPUDisponivelEmUso();
         this.getProcesso();
         this.getTotalChamado();
+        console.log(this.labelTemMax);
     };
     PerfilDashboardComponent.prototype.getHardwareById = function () {
         var _this = this;
@@ -2329,6 +2360,12 @@ var PerfilDashboardComponent = /** @class */ (function () {
             var cpu_em_uso = res['recordset'].map(function (res) { return res.cpu_em_uso; });
             var cpu_disponivel = res['recordset'].map(function (res) { return res.cpu_disponivel; });
             var dataHora = res['recordset'].map(function (res) { return res.data_hora; });
+            cpu_em_uso.forEach(function (res) {
+                _this.labelCPU_Uso.push(res);
+            });
+            cpu_disponivel.forEach(function (res) {
+                _this.labelCPU_Disponivel.push(res);
+            });
             dataHora.forEach(function (res) {
                 var jsdate = new Date(res);
                 chartDate.push(jsdate.toLocaleTimeString('en', {
@@ -2341,12 +2378,14 @@ var PerfilDashboardComponent = /** @class */ (function () {
                     labels: chartDate,
                     datasets: [{
                             data: cpu_em_uso,
+                            label: 'CPU em uso',
                             backgroundColor: '#3cba9f'
                         }, {
                             data: cpu_disponivel,
+                            label: 'CPU Disponivel',
                             backgroundColor: '#ffcc00'
                         }
-                    ]
+                    ],
                 },
                 options: {
                     legend: {
@@ -2363,21 +2402,21 @@ var PerfilDashboardComponent = /** @class */ (function () {
         var chartTempMin = [];
         setTimeout(function () {
             _this.chartjs.getAllDados(params.id).subscribe(function (res) {
-                var temp_max = res['recordset'].map(function (res) { return res.memoria_ram_disponivel; });
-                var temp_min = res['recordset'].map(function (res) { return res.memoria_ram_em_uso_cpu; });
-                // temp_max.forEach((res) => {
-                //   chartTempMax.push(res);
-                // })
-                // temp_min.forEach((res) => {
-                //   chartTempMin.push(res);
-                // })
+                var ram_livre = res['recordset'].map(function (res) { return res.memoria_ram_disponivel; });
+                var ram_em_uso = res['recordset'].map(function (res) { return res.memoria_ram_em_uso_cpu; });
+                ram_livre.forEach(function (res) {
+                    _this.labelRAm_Disponivel.push(res);
+                });
+                ram_em_uso.forEach(function (res) {
+                    _this.labelRAM_Uso.push(res);
+                });
                 _this.chartMemoriaRam = new chart_js__WEBPACK_IMPORTED_MODULE_2__["Chart"]('memoriaRam', {
                     type: 'pie',
                     data: {
                         datasets: [{
                                 data: [
-                                    temp_max,
-                                    temp_min,
+                                    ram_livre,
+                                    ram_em_uso,
                                 ],
                                 backgroundColor: [
                                     '#3cba9f',
@@ -2385,8 +2424,8 @@ var PerfilDashboardComponent = /** @class */ (function () {
                                 ],
                             }],
                         labels: [
-                            'Em uso',
-                            'Livre'
+                            'Memoria Ram Disponivel',
+                            'Memoria Ram Em uso'
                         ]
                     },
                     options: {
@@ -2416,17 +2455,20 @@ var PerfilDashboardComponent = /** @class */ (function () {
                 temp_max.forEach(function (res) {
                     chartTempMax.push(res);
                 });
-                // temp_min.forEach((res) => {
-                //   chartTempMin.push(res);
-                // })
+                temp_max.forEach(function (res) {
+                    _this.labelTemMax.push(res);
+                });
                 alldates.forEach(function (res) {
                     var jsdate = new Date(res);
                     chartDate.push(jsdate.toLocaleTimeString('en', {
                         hour: 'numeric'
                     }));
                 });
-                if (chartTempMax.length > 20) {
-                    chartTempMax.splice(0, 1);
+                if (chartTempMax.length > 5) {
+                    temp_max.forEach(function (res) {
+                        chartTempMax.splice(0, 1);
+                    });
+                    return;
                 }
                 // if (chartTempMin.length > 20) {
                 //   chartTempMin.splice(0, 1)
@@ -2868,7 +2910,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"wrapper\">\n  <div class=\"sidebar\" data-color=\"danger\" data-background-color=\"white\" data-image=\"./assets/img/sidebar-1.jpg\">\n    <app-side-bar-dashboard></app-side-bar-dashboard>\n    <div class=\"sidebar-background\" style=\"background-image: url(./assets/img/sidebar-4.jpg)\"></div>\n  </div>\n  <div class=\"main-panel\">\n    <app-nav-bar-dashboard></app-nav-bar-dashboard>\n    <div class=\"main-content\">\n      <main role=\"main\">\n        <button value=\"Voltar\" onClick=\"history.go(-1)\" class=\"btn btn-primary bmd-btn-fab\">\n          <p id=\"tooltiptext\">Retornar</p>\n          <i class=\"material-icons\">\n            keyboard_backspace\n          </i>\n        </button>\n        <div class=\"container-fluid\">\n          <div class=\"row\">\n            <div class=\"col-md-12\">\n              <div class=\"card card-plain\">\n                <div class=\"card-header card-header-danger\">\n                  <h4 class=\"card-title mt-0\">{{evento.nomeEvento[0]}}</h4>\n                </div>\n                <div class=\"card-body\">\n                  <div class=\"table-responsive\">\n                    <table class=\"table table-hover\">\n                      <thead>\n                        <th>\n                          ID:Soft\n                        </th>\n                        <th>\n                          Nome do Soft\n                        </th>\n                        <th>\n                          ID:Evento\n                        </th>\n                      </thead>\n                      <tbody>\n                        <tr *ngFor=\"let eventos of eventos\">\n                          <td>\n                            {{eventos.id_soft}}\n                          </td>\n                          <td>\n                            {{eventos.nome_soft}}\n                          </td>\n                          <td>\n                            {{eventos.id_Evento}}\n                          </td>\n                        </tr>\n                      </tbody>\n                    </table>\n                  </div>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </main>\n    </div>\n    <app-footer-dashboard></app-footer-dashboard>\n  </div>\n</div>"
+module.exports = "<div class=\"wrapper\">\r\n  <!-- <div class=\"sidebar\" data-color=\"danger\" data-background-color=\"white\" data-image=\"./assets/img/sidebar-1.jpg\">\r\n    <app-side-bar-dashboard></app-side-bar-dashboard>\r\n    <div class=\"sidebar-background\" style=\"background-image: url(./assets/img/sidebar-4.jpg)\"></div>\r\n  </div> -->\r\n  <div class=\"main-panel\">\r\n    <app-nav-bar-dashboard></app-nav-bar-dashboard>\r\n    <div class=\"main-content\">\r\n      <main role=\"main\">\r\n        <button value=\"Voltar\" onClick=\"history.go(-1)\" class=\"btn btn-primary bmd-btn-fab\">\r\n          <p id=\"tooltiptext\">Retornar</p>\r\n          <i class=\"material-icons\">\r\n            keyboard_backspace\r\n          </i>\r\n        </button>\r\n        <div class=\"container-fluid\">\r\n          <div class=\"row\">\r\n            <div class=\"col-md-12\">\r\n              <div class=\"card card-plain\">\r\n                <div class=\"card-header card-header-danger\">\r\n                  <h4 class=\"card-title mt-0\">{{evento.nomeEvento[0]}}</h4>\r\n                </div>\r\n                <div class=\"card-body\">\r\n                  <div class=\"table-responsive\">\r\n                    <table class=\"table table-hover\">\r\n                      <thead>\r\n                        <th>\r\n                          ID:Soft\r\n                        </th>\r\n                        <th>\r\n                          Nome do Soft\r\n                        </th>\r\n                        <th>\r\n                          ID:Evento\r\n                        </th>\r\n                      </thead>\r\n                      <tbody>\r\n                        <tr *ngFor=\"let eventos of eventos\">\r\n                          <td>\r\n                            {{eventos.id_soft}}\r\n                          </td>\r\n                          <td>\r\n                            {{eventos.nome_soft}}\r\n                          </td>\r\n                          <td >\r\n                            {{eventos.id_Evento}}\r\n                          </td>\r\n                          <button class=\"btn btn-danger\" onClick=\"history.go(-1)\" (click)=\"deletarMaquina(eventos.id_Evento)\">\r\n                            <i class=\"far fa-trash-alt\"></i>\r\n                          </button>\r\n                        </tr>\r\n                      </tbody>\r\n                    </table>\r\n                  </div>\r\n                </div>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </main>\r\n    </div>\r\n    <app-footer-dashboard></app-footer-dashboard>\r\n  </div>\r\n</div>"
 
 /***/ }),
 
@@ -2930,6 +2972,15 @@ var VisualizarEventoComponent = /** @class */ (function () {
             });
         });
     };
+    VisualizarEventoComponent.prototype.deletarMaquina = function (id_Soft) {
+        this.userService.deleteMaquina(id_Soft).subscribe(function (res) {
+            console.log(res);
+            if (true) {
+                confirm("Maquina deletada com sucesso !");
+            }
+            //this.getEventosById();
+        }, function (err) { return console.log(err); });
+    };
     VisualizarEventoComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
             selector: 'app-visualizar-evento',
@@ -2963,7 +3014,7 @@ __webpack_require__.r(__webpack_exports__);
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 var environment = {
-    production: true
+    production: false
 };
 /*
  * For easier debugging in development mode, you can import the following file
@@ -3011,7 +3062,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\daniel.bertucci\Desktop\SevenSoft-Angular\src\main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! C:\Users\user\Desktop\AngularCLI\SevenSoft-Angular --prod\src\main.ts */"./src/main.ts");
 
 
 /***/ })
