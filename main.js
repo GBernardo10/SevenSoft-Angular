@@ -1002,7 +1002,7 @@ var EventoService = /** @class */ (function () {
     function EventoService(http, httpHandler) {
         this.http = http;
         this.httpHandler = httpHandler;
-        this.API_URI = 'http://localhost:3000/api';
+        this.API_URI = 'https://servidorsevensoft.azurewebsites.net/api';
     }
     EventoService.prototype.cadMaquina = function (formData) {
         console.log(formData);
@@ -1062,7 +1062,7 @@ var GraficoService = /** @class */ (function () {
     function GraficoService(http, httpHandler) {
         this.http = http;
         this.httpHandler = httpHandler;
-        this.API_URI = 'http://localhost:3000/api';
+        this.API_URI = 'https://servidorsevensoft.azurewebsites.net/api';
     }
     GraficoService.prototype.getAllDados = function (id) {
         return this.http.get(this.API_URI + "/grafico/" + id).map(function (result) { return result; });
@@ -1149,7 +1149,7 @@ var UsersService = /** @class */ (function () {
     function UsersService(http, router) {
         this.http = http;
         this.router = router;
-        this.API_URI = 'http://localhost:3000/api';
+        this.API_URI = 'https://servidorsevensoft.azurewebsites.net/api';
     }
     UsersService.prototype.log = function (msg) {
         console.log(new Date() + ": "
@@ -1228,7 +1228,7 @@ var UsersService = /** @class */ (function () {
     UsersService.prototype.logout = function () {
         if (localStorage.getItem('currentUser')) {
             localStorage.removeItem('currentUser');
-            this.router.navigate(['/home']);
+            this.router.navigate(['/login']);
         }
     };
     UsersService.prototype.isloggedIn = function () {
@@ -1915,7 +1915,7 @@ var EventoDashboardComponent = /** @class */ (function () {
                 _this.eventoService.cadEvento(evento);
                 if (true) {
                     confirm("Evento cadastrado com sucesso !");
-                    _this.router.navigate(['/dashboard', _this.user.id_usuario]);
+                    // this.router.navigate(['/dashboard', this.user.id_usuario])
                 }
                 console.log(formData);
             }
